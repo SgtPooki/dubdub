@@ -1,18 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Your prismic.io singlepage project</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="main.css" media="all" rel="stylesheet" type="text/css" />
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Your prismic.io singlepage project</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="main.css" media="all" rel="stylesheet" type="text/css" />
+  <script src="https://prismicio.github.io/baked.js/baked-0.3.0.js"></script>
+</head>
+<body>
 
-    <script src="https://prismicio.github.io/baked.js/baked-0.3.0.js"></script>
-  </head>
-  <body>
+  <div class="header">
+    <a href="/">
+      <img src="https://www.mozu.com/sites/all/themes/mozu_aurora/logo.png">
+    </a>
+  </div>
 
-    <p>This page uses stylus dude</p>
+  <div class="container">
+
+    <script type="text/prismic-query" data-binding="homePage">
+      [
+        [:d = at(document.tags, ["homePage"])]
+      ]
+    </script>
+
+    <h1>Super Headline</h1>
+    <p>Supporting description tagline</p>
+    <br>
 
     <script type="text/prismic-query" data-binding="featuredProducts" data-query-orderings="[my.product.name]">
       [
@@ -21,16 +36,17 @@
       ]
     </script>
 
-    <h1>[%= featuredProducts.total_results_size %] featured products:</h1>
+    <h2>[%= featuredProducts.total_results_size %] featured products:</h2>
     [% _.each(featuredProducts.results, function(product) { %]
-      <div>
+      <div class="item">
         <a href="[%= pathTo('product', {id: product.id}) %]">
-          <h2>[%= product.getText('product.name') %]</h2>
+          <h3>[%= product.getText('product.name') %]</h3>
         </a>
         <img data-src="[%= product.getImageView('product.image', 'icon').url %]">
       </div>
     [% }) %]
 
+  </div>
 
-  </body>
+</body>
 </html>

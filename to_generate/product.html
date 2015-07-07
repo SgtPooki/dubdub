@@ -2,19 +2,27 @@
 <html>
   <head>
     <meta name="prismic-routing-param" content="id">
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Your prismic.io singlepage project</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/main.css" media="all" rel="stylesheet" type="text/css" />
-
     <script src="https://prismicio.github.io/baked.js/baked-0.3.0.js"></script>
   </head>
-  <body>
+<body>
 
-    <a href="/">Home</a> // [%= product.results[0].getText('product.name') %]
+  <div class="header">
+    <a href="/">
+      <img src="https://www.mozu.com/sites/all/themes/mozu_aurora/logo.png">
+    </a>
+  </div>
+
+  <div class="container">
+
+    <div class="breadcrumb">
+      <a href="/">Home</a> // [%= product.results[0].getText('product.name') %]
+    </div>
 
     <script type="text/prismic-query" data-binding="product">
       [
@@ -22,8 +30,10 @@
       ]
     </script>
 
-      <h2>[%= product.results[0].getText('product.name') %]</h2>
-      <img data-src="[%= product.results[0].getImageView('product.image', 'icon').url %]">
+    <h1>[%= product.results[0].getText('product.name') %]</h1>
+    <img data-src="[%= product.results[0].getImageView('product.image', 'icon').url %]">
 
-  </body>
+  </div>
+
+</body>
 </html>
