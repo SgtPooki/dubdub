@@ -1,11 +1,25 @@
 'use strict';
 
-// Loads the main gulp library
 var gulp = require('gulp');
-// Loads the baked.js's tasks
 var baked = require('baked/gulp');
-// Libraries used in this file
 var stylus = require('gulp-stylus');
+var browserSync = require('browser-sync').create();
+
+// Browser-Sync
+gulp.task('browser-sync', function() {
+    browserSync.init({
+        server: {
+            baseDir: './generated'
+        },
+        watchOptions: {
+          debounceDelay: 2000
+        }
+    });
+});
+gulp.task('reload', function () {
+  console.log('reloading folks!');
+  browserSync.reload();
+});
 
 // Load and get the baked configuration
 // in order to use srcDir and dstDir
@@ -33,8 +47,9 @@ gulp.task('stylus', function () {
 
 gulp.task('watch:stylus', function () {
   gulp.watch(paths.stylus.src, ['stylus']);
+  gulp.watch('generated/*', ['reload']); //TODO: Figure out how to wait until backed:generate finishes so we don't have a ton of reloads while it's generating
 });
 
 // Defaults tasks
-gulp.task('serve', ['stylus', 'watch:stylus', 'baked:serve']);
+gulp.task('serve', ['stylus', 'watch:stylus', 'baked:serve', 'browser-sync']);
 gulp.task('default', ['stylus', 'baked:default']);
