@@ -1,10 +1,11 @@
+'use strict';
+
 // Loads the main gulp library
 var gulp = require('gulp');
 // Loads the baked.js's tasks
 var baked = require('baked/gulp');
 // Libraries used in this file
 var stylus = require('gulp-stylus');
-var watch = require('gulp-watch');
 
 // Load and get the baked configuration
 // in order to use srcDir and dstDir
