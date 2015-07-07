@@ -1,0 +1,514 @@
+@-webkit-keyframes slidein {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+@-moz-keyframes slidein {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+@-o-keyframes slidein {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+@keyframes slidein {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+/* line 19, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .mozu-container {
+  max-width: 1110px !important;
+  width: 100% !important;
+  margin: 0 auto;
+}
+/* line 24, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento #header {
+  padding: 2em 0.5em;
+  font-size: 12px;
+}
+/* line 28, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento #header .btn {
+  border-radius: 3px;
+  padding: 11px 26px;
+  margin-left: 2em;
+}
+/* line 33, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento #header .demo:link {
+  font-size: 12px;
+}
+/* line 36, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento #header-inside .block-menu-block ul li ul li {
+  margin: 0 0 0 0.4em;
+}
+/* line 39, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .intro-section {
+  background: url(../images/mozu-vs-magento/hero-area.jpg) center center no-repeat;
+  background-size: cover;
+  min-height: 330px;
+  padding-top: 89px;
+  text-align: center;
+  font-family: "Gotham SSm A","Gotham SSm B",sans-serif;
+  font-weight: 100;
+  color: #fff;
+  margin-top: 90px;
+}
+/* line 50, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .intro-section h1 {
+  font-size: 45px;
+  font-weight: 500;
+  color: #fff;
+}
+/* line 55, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .intro-section span {
+  font-size: 18px;
+  font-family: "Gotham SSm A","Gotham SSm B",sans-serif;
+  font-weight: 100;
+}
+/* line 60, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .front #header a:link {
+  color: #8c9092;
+}
+/* line 63, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .front #header a:hover {
+  color: #e84029;
+}
+/* line 66, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .main-blog {
+  padding-top: 40px;
+}
+/* line 69, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .magento-customer {
+  overflow: hidden;
+}
+/* line 72, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .mozu-features {
+  float: left;
+  width: 61%;
+}
+/* line 76, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .mozu-features h2 {
+  font-size: 28px;
+}
+/* line 81, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .mozu-features ul {
+  padding: 13px 13px 0 0;
+}
+/* line 84, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .mozu-features li,
+#mozu-vs-magento .functionality li {
+  list-style: none;
+}
+/* line 88, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .mozu-features li a,
+#mozu-vs-magento .chart-sign span {
+  color: #484b4c;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+/* line 95, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .red-line,
+#mozu-vs-magento .gray-line {
+  display: block;
+  height: 7px;
+  margin: 5px 0;
+}
+/* line 101, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .red-line {
+  width: 100%;
+}
+/* line 104, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .line-api-flexibility,
+#mozu-vs-magento .line-multi-tenant,
+#mozu-vs-magento .line-predictable {
+  width: 66%;
+}
+/* line 109, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .line-customization {
+  width: 57%;
+}
+/* line 112, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .line-management {
+  width: 74%;
+}
+/* line 115, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .red-line span,
+#mozu-vs-magento .gray-line span {
+  border-radius: 3px;
+  height: 100%;
+  width: 100%;
+  display: block;
+  -webkit-animation: slidein 2s ease forwards;
+  -moz-animation: slidein 2s ease forwards;
+  -o-animation: slidein 2s ease forwards;
+  animation: slidein 2s ease forwards;
+}
+/* line 126, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .red-line span {
+  background-color: #d85340;
+}
+/* line 129, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .gray-line span {
+  background-color: #afb0b0;
+}
+/* line 132, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .chart-sign {
+  padding-top: 6px;
+  text-align: right;
+}
+/* line 136, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .chart-sign span {
+  margin: 0 17px 0 35px;
+  position: relative;
+}
+/* line 140, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .magento-sign:after,
+#mozu-vs-magento .mozu-sign::after {
+  background-color: #d85340;
+  border-radius: 2px;
+  content: "";
+  height: 7px;
+  left: -33px;
+  position: absolute;
+  top: 1px;
+  width: 21px;
+}
+/* line 151, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .magento-sign:after {
+  background-color: #afb0b0;
+}
+/* line 154, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .magento-customer label.mktoLabel,
+#mozu-vs-magento .magento-customer .mktoGutter.mktoHasWidth,
+#mozu-vs-magento .magento-customer .mktoOffset {
+  display: none !important;
+}
+/* line 159, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .marketo-form-element {
+  float: right;
+  padding: 50px 4%;
+  width: 32%;
+  background-color: #f9fbfb;
+}
+/* line 165, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .thankyou-msg {
+  float: right;
+  padding: 50px 4%;
+  width: 32%;
+  text-align: center;
+}
+/* line 171, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .marketo-form-element h3 {
+  color: #484b4c;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 0 27px;
+  text-align: center;
+  text-transform: uppercase;
+}
+/* line 179, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .marketo-form-element .mktoForm {
+  font-family: "Gotham SSm A", "Gotham SSm B", sans-serif !important;
+  font-weight: 300;
+}
+/* line 183, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .marketo-form-element .mktoForm.mktoHasWidth.mktoLayoutLeft,
+#mozu-vs-magento .marketo-form-element .mktoForm input[type="text"],
+#mozu-vs-magento .marketo-form-element .mktoForm input[type="url"],
+#mozu-vs-magento .marketo-form-element .mktoForm input[type="email"],
+#mozu-vs-magento .marketo-form-element .mktoForm input[type="tel"],
+#mozu-vs-magento .marketo-form-element .mktoForm input[type="number"],
+#mozu-vs-magento .marketo-form-element .mktoForm input[type="date"],
+#mozu-vs-magento .marketo-form-element .mktoForm textarea.mktoField,
+#mozu-vs-magento .mktoForm select.mktoField {
+  width: 100% !important;
+}
+/* line 194, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .marketo-form-element .mktoForm input[type="text"],
+#mozu-vs-magento .marketo-form-element .mktoForm input[type="url"],
+#mozu-vs-magento .marketo-form-element .mktoForm input[type="email"],
+#mozu-vs-magento .marketo-form-element .mktoForm input[type="tel"],
+#mozu-vs-magento .marketo-form-element .mktoForm input[type="number"],
+#mozu-vs-magento .marketo-form-element .mktoForm input[type="date"],
+#mozu-vs-magento .marketo-form-element .mktoForm textarea.mktoField,
+#mozu-vs-magento .mktoForm select.mktoField {
+  height: 41px;
+  margin-bottom: 3px;
+}
+/* line 205, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .marketo-form-element .mktoForm input[type="text"],
+#mozu-vs-magento .marketo-form-element .mktoForm input[type="url"],
+#mozu-vs-magento .marketo-form-element .mktoForm input[type="email"],
+#mozu-vs-magento .marketo-form-element .mktoForm input[type="tel"],
+#mozu-vs-magento .marketo-form-element .mktoForm input[type="number"],
+#mozu-vs-magento .marketo-form-element .mktoForm input[type="date"],
+#mozu-vs-magento .marketo-form-element .mktoForm textarea.mktoField,
+#mozu-vs-magento .mktoForm select.mktoField {
+  padding: 0 14px;
+  font-family: "Gotham SSm A","Gotham SSm B",sans-serif;
+  font-weight: 300;
+  font-size: 1em;
+}
+/* line 218, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .marketo-form-element .mktoForm .mktoFormCol,
+#mozu-vs-magento .marketo-form-element .mktoForm .mktoFieldWrap {
+  float: none;
+}
+/* line 222, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .mktoButtonWrap.mktoSimple {
+  margin: 0 auto !important;
+}
+/* line 225, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .marketo-form-element .mktoButtonRow {
+  width: 100%;
+  text-align: center;
+}
+/* line 229, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .marketo-form-element .mktoButton {
+  width: auto;
+  padding: 0 40px;
+}
+/* line 233, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .marketo-form-element .mktoButton {
+  height: 42px;
+  line-height: 42px;
+  font-size: 14px;
+}
+/* line 238, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .marketo-form-element .mktoButtonRow {
+  padding-top: 2px;
+}
+/* line 241, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .marketo-form-element .mktoForm .mktoButtonWrap.mktoSimple .mktoButton:hover {
+  background: #b12613;
+}
+/* line 244, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .functionality {
+  font-size: 14px;
+  overflow: hidden;
+  padding: 82px 0 45px;
+  margin: 0 -4%;
+}
+/* line 250, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .functionality li {
+  float: left;
+  margin: 0 4% 25px;
+  min-height: 240px;
+  padding-right: 20px;
+  width: 42%;
+}
+/* line 261, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .functionality span {
+  color: #4e4f50;
+  font-style: italic;
+}
+/* line 265, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .comment-section {
+  background: url(../images/mozu-vs-magento/shape-art.jpg) center top no-repeat;
+  background-size: cover;
+  padding: 70px 0 86px;
+  text-align: center;
+}
+/* line 271, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .comment-section p,
+#mozu-vs-magento .comment-section span,
+#mozu-vs-magento .comment-section small {
+  font-size: 14px;
+  color: #4f5153;
+}
+/* line 277, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .comment-section p {
+  font-weight: 500;
+  margin: 26px 0 14px;
+}
+/* line 284, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .comment-section small,
+#mozu-vs-magento .comment-section blockquote {
+  color: #85898b;
+}
+/* line 288, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento .comment-section span {
+  display: block;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin: 7px 0;
+  letter-spacing: 0.05rem;
+}
+/* line 295, ../sass/mozu-vs-magento.scss */
+#mozu-vs-magento #header-inside {
+  margin: 0 auto;
+}
+@media only screen and (max-width: 1199px) {
+  /* line 301, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .functionality {
+    margin: 0;
+  }
+  /* line 304, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .mozu-container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  /* line 308, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .functionality h4 {
+    line-height: 1.5;
+  }
+}
+@media only screen and (min-width: 0) and (max-width: 1024px) {
+  /* line 314, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .marketo-form-element {
+    padding: 40px 2%;
+  }
+  /* line 317, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .thankyou-msg {
+    padding: 40px 2%;
+  }
+  /* line 320, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .functionality li {
+    margin: 0 3% 25px;
+    padding-right: 0;
+    width: 44%;
+    min-height: 260px;
+  }
+}
+@media only screen and (max-width: 840px) {
+  /* line 328, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento #header-inside .block-menu-block ul li > a {
+    background: url(../images/mozu-vs-magento/mobile-menu.png) 0 0 no-repeat;
+  }
+}
+@media only screen and (min-width: 0px) and (max-width: 767px) {
+  /* line 333, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .mozu-features,
+  #mozu-vs-magento .marketo-form-element,
+  #mozu-vs-magento .functionality li {
+    float: none;
+    width: 100%;
+  }
+  /* line 339, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .thankyou-msg {
+    float: none;
+    width: 100%;
+  }
+  /* line 343, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .functionality li {
+    min-height: 0px;
+    margin-bottom: 60px;
+  }
+  /* line 347, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .marketo-form-element {
+    padding: 30px 0;
+  }
+  /* line 350, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .thankyou-msg {
+    padding: 30px 0;
+  }
+  /* line 353, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .marketo-form-element .mktoForm,
+  #mozu-vs-magento .mktoForm * {
+    box-sizing: border-box;
+    padding: 0 10px;
+  }
+  /* line 358, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .intro-section {
+    padding-top: 100px;
+  }
+  /* line 361, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .mozu-features ul {
+    padding: 13px 0 0;
+  }
+  /* line 364, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .comment-section blockquote {
+    font-size: 16px;
+  }
+  /* line 367, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .main-blog {
+    padding-top: 20px;
+  }
+  /* line 370, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .mozu-features h2 {
+    font-size: 24px;
+  }
+  /* line 373, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .mozu-features {
+    margin-bottom: 50px;
+  }
+  /* line 376, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .marketo-form-element .mktoForm input[type="text"],
+  #mozu-vs-magento .marketo-form-element .mktoForm input[type="url"],
+  #mozu-vs-magento .marketo-form-element .mktoForm input[type="email"],
+  #mozu-vs-magento .marketo-form-element .mktoForm input[type="tel"],
+  #mozu-vs-magento .marketo-form-element .mktoForm input[type="number"],
+  #mozu-vs-magento .marketo-form-element .mktoForm input[type="date"],
+  #mozu-vs-magento .marketo-form-element .mktoForm textarea.mktoField,
+  #mozu-vs-magento .mktoForm select.mktoField {
+    font-size: 13px;
+  }
+  /* line 386, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .functionality {
+    padding-top: 60px;
+  }
+}
+@media only screen and (max-width: 480px) {
+  /* line 391, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .intro-section {
+    padding-top: 60px;
+  }
+  /* line 394, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .marketo-form-element .mktoForm,
+  #mozu-vs-magento .mktoForm * {
+    box-sizing: border-box;
+    padding: 0 5px;
+  }
+  /* line 399, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .platform-info header {
+    padding: 0;
+  }
+  /* line 403, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .platform-info .gallery-2 .slide .img-1 {
+    left: 0;
+  }
+  /* line 407, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .platform-info .gallery-2 .switcher .ico {
+    display: none;
+  }
+  /* line 410, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .platform-info .gallery-2 {
+    margin-bottom: 3em;
+  }
+  /* line 413, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento .api-info .logos-list li {
+    padding: 17px;
+  }
+  /* line 416, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento #footer .client-area {
+    padding: 1em 0 2em 0;
+  }
+  /* line 420, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento #footer .client-area .heading {
+    display: inherit;
+    margin: 2em 0 1em 0;
+  }
+  /* line 425, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento #footer .client-area .logo-list span {
+    padding: 10px 22px;
+  }
+  /* line 428, ../sass/mozu-vs-magento.scss */
+  #mozu-vs-magento #footer .summit-area {
+    height: 530px;
+  }
+}

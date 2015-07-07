@@ -1,0 +1,165 @@
+// ------------
+// Scene Animator
+// ------------
+// Alters classes on elements as the come into or leave the
+// viewport so that css animations can be applied.
+// Katie Garcia 05.12.2015
+
+// ------------
+// Dependencies
+// ------------
+// Waypoints + Inview extension
+// - http://imakewebthings.com/waypoints/
+// ClassList
+// - https://github.com/eligrey/classList.js
+
+// ------------
+// How to use
+// ------------
+// Add an id starting with "js-scene-" to any element in your html.
+// This script will automatically listen for those elements to hit certain
+// trigger points and apply descriptive classes accordingly.
+// The classes/states the element will go through include...
+//
+// Before first animation
+// .js-to-animate
+//
+// Position of element in window (may be more than one at a time)
+// .js-entering
+// .js-entered
+// .js-exiting
+// .js-exited
+//
+// Direction of scroll
+// .js-going-up
+// .js-going-down
+
+var sceneAnimator = {
+
+  init: function() {
+    this.detectIds();
+  },
+
+  detectIds: function() {
+    var scenePrefix = /^js-scene-/;
+    var scenesArray=[];
+    var els=document.getElementsByTagName('*');
+    for (var i=0; i < els.length; i++) {
+      if (scenePrefix.test((els[i]).id)) {
+        scenesArray.push(els[i].id);
+      }
+    }
+    if (scenesArray.length > 0) {
+      //elements exist with id js-scene-*
+      sceneAnimator.bindClasses(scenesArray);
+    }
+    else {
+      // scenes don't exist
+    }
+  },
+  bindClasses: function(a) {
+    var index;
+    for (index = 0; index < a.length; index++) {
+      // set to-animate class, for javascript detection
+      document.getElementById(a[index]).classList.add("js-to-animate");
+      document.getElementById(a[index]).classList.add("js-outofview");
+      document.getElementById(a[index]).classList.add("js-outofview-below");
+      // instantiate waypoints on each elem with id="js-scene-*"
+      var inview = new Waypoint.Inview({
+        element: document.getElementById(a[index]),
+        //entering
+        enter: function(direction) {
+          // remove to-animate upon first entry
+          this.element.classList.remove("js-to-animate");
+          //if direction switch, negate current position
+          sceneAnimator.changeDirection(this.element,direction);
+          // add class for position relative to window
+          this.element.classList.remove("js-exited");
+          this.element.classList.remove("js-entered");
+          this.element.classList.add("js-entering");
+          //define inview
+          this.element.classList.remove("js-outofview");
+          this.element.classList.remove("js-outofview-below");
+          this.element.classList.remove("js-outofview-above");
+          this.element.classList.add("js-inview");
+          // define direction
+          sceneAnimator.bindDirectionClasses(this.element, direction);
+        },
+        //entered
+        entered: function(direction) {
+          //if direction switch, negate current position
+          sceneAnimator.changeDirection(this.element,direction);
+          // add class for position relative to window
+          this.element.classList.remove("js-entering");
+          this.element.classList.add("js-entered");
+          // define direction
+          sceneAnimator.bindDirectionClasses(this.element, direction);
+        },
+        //exiting
+        exit: function(direction) {
+          //if direction switch, negate current position
+          sceneAnimator.changeDirection(this.element,direction);
+          // add class for position relative to window
+          this.element.classList.remove("js-exited");
+          this.element.classList.add("js-exiting");
+
+          // define direction
+          sceneAnimator.bindDirectionClasses(this.element, direction);
+        },
+        //exited
+        exited: function(direction) {
+          //if direction switch, negate current position
+          sceneAnimator.changeDirection(this.element,direction);
+          // add class for position relative to window
+          this.element.classList.remove("js-entering");
+          this.element.classList.remove("js-exiting");
+          this.element.classList.add("js-exited");
+          //define inview
+          this.element.classList.add("js-outofview");
+          this.element.classList.remove("js-inview");
+          // define direction
+          sceneAnimator.bindDirectionClasses(this.element, direction);
+          if (direction ==='up') {
+            this.element.classList.add("js-outofview-below");
+          }
+          else if (direction === 'down') {
+            this.element.classList.add("js-outofview-above");
+          }
+        }
+      })
+    }
+  },
+  changeDirection: function(currElem, direction){
+    if (direction == 'up') {
+      if (currElem.classList.contains("js-going-down")){
+        currElem.classList.remove("js-entering");
+        currElem.classList.remove("js-exiting");
+        currElem.classList.remove("js-exited");
+        currElem.classList.remove("js-entered");
+      }
+    }if (direction == 'down') {
+      if (currElem.classList.contains("js-going-up")){
+        currElem.classList.remove("js-entering");
+        currElem.classList.remove("js-exiting");
+        currElem.classList.remove("js-exited");
+        currElem.classList.remove("js-entered");
+      }
+    }
+  },
+  bindDirectionClasses: function(currElem, direction){
+    currElem.classList.remove("js-going-up");
+    currElem.classList.remove("js-going-down");
+    currElem.classList.add("js-going-"+direction);
+  }
+};
+
+(function() {
+  sceneAnimator.init();
+})();
+
+
+
+
+
+
+

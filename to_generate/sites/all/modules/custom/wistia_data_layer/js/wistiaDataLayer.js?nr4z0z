@@ -1,0 +1,107 @@
+var wistiaObj = {
+    'iframeObj': [],
+    'embedObj': []
+};
+
+jQuery(document).ready(function () {
+
+    if (typeof wistiaEmbeds !== 'undefined' && typeof jQuery !== 'undefined') {
+
+
+        (function ($, wistiaArray) {
+
+            var WistiaObject = function (element) {
+
+                var previousS = 0;
+                var currentS = 0;
+
+
+                element.bind('secondchange', function (s) {
+                });
+                element.bind('play', function () {
+                    dataLayer.push({
+                        "event": 'trackVideo',
+                        "video": element.name(),
+                        "action": 'Play'
+                    });
+                });
+                element.bind('pause', function () {
+
+                    if(element.state() !== 'ended'){
+                        dataLayer.push({
+                            "event": "trackVideo",
+                            "video": element.name(),
+                            "action": "Pause"
+                        });
+                    }
+                });
+                element.bind('end', function () {
+                    dataLayer.push({
+                        "event": "trackVideo",
+                        "video": element.name(),
+                        "action": "Complete"
+                    });
+                });
+
+                element.bind('secondchange', function (s) {
+                    currentS = s;
+
+                    if ((currentS / element.duration()) >= 0.25 && (previousS / element.duration()) <= 0.25) {
+                        dataLayer.push({
+                            "event": "trackVideo",
+                            "video": element.name(),
+                            "action": '25% viewed'
+                        });
+                    }
+                    else if ((currentS / element.duration()) >= 0.50 && (previousS / element.duration()) <= 0.50) {
+                        dataLayer.push({
+                            "event": "trackVideo",
+                            "video": element.name(),
+                            "action": '50% viewed'
+                        })
+                    }
+
+                    else if ((currentS / element.duration()) >= 0.75 && (previousS / element.duration()) <= 0.75) {
+                        dataLayer.push({
+                            "event": "trackVideo",
+                            "video": element.name(),
+                            "action": '75% viewed'
+                        })
+                    }
+                    previousS = currentS;
+                });
+
+                this.wo_pause = function () {
+                    element.pause();
+                }
+            };
+
+            try{
+                wistiaJQuery(document).bind("wistia-popover", function (event, iframe) {
+                    try {
+                        var currentObj = new WistiaObject(iframe.wistiaApi);
+                        wistiaArray.iframeObj.push(currentObj);
+                    } catch (err) {
+                        console.log(iframe, event, 'error - not working');
+                    }
+                });
+
+                wistiaJQuery(document).bind("wistia-popover-close", function () {
+                    wistiaArray.iframeObj = [];
+                });
+            }catch(err){
+                console.log('wistiaJQuery probably dont exist', err);
+            }
+
+
+
+            $.each(wistiaEmbeds, function (k, v) {
+                wistiaArray.embedObj.push(new WistiaObject(v));
+            });
+
+        })(jQuery, wistiaObj);
+    } else {
+        console.log('Either no video exists or jQuery does not exist.');
+    }
+});
+

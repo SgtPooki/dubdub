@@ -1,0 +1,393 @@
+// JavaScript Document
+
+jQuery(function($) {
+  /*$('.touch #block-system-main-menu ul.menu').hide();
+
+  $('.touch #menu-icon').click(function () {
+      $('#block-system-main-menu ul.menu').slideToggle(500);
+      return false;
+  }); */
+
+  $('#search').prepend('<div id="search-close"></div>')
+  $('#toggleSearch,#search-close').click(function(e){
+    $('#search').fadeToggle(500);
+    $('#toggleSearch').toggleClass('searchClose')
+  })
+
+
+
+	/*if (jQuery("#edit-submitted-inquiry-type").is("select")){
+		$("#edit-submitted-inquiry-type").val(window.location.search.replace('?',''));
+	}*/
+	if (jQuery("#Inquiry_type__c").is("select")){
+		$("#Inquiry_type__c").val(window.location.search.replace('?',''));
+	}
+	$('.menu-mlid-848>a,.menu-mlid-1265>a').click(function(e){
+	 e.preventDefault();
+	})
+
+
+/***********************************
+  FAQ Show Hide
+  ***********************************/
+
+  $('.showhide h3').prepend('<a class="open-close">+ </a>');
+  var pwidth = $('.two-columns .v_column').width();
+  $('.showhide p').width( pwidth);
+  $('.showhide h3').click(function() {
+    $('.showhide .open .open-close').html('+ ');
+    if($('.showhide h3').hasClass('open') == true && $(this).hasClass('open') != true){
+      $('.showhide .open').next().slideUp(600);
+      $('.showhide .open').removeClass('open');
+    };
+    $(this).toggleClass('open');
+    $('.showhide .open .open-close').html('- ');
+    $(this).next().slideToggle(600);
+  });
+
+
+  $('.menu-mlid-1265 > a').click(function(e){
+    $('.menu-mlid-1265 > ul').slideToggle(400);
+    e.preventDefault();
+  });
+
+
+
+/***********************************
+  Quick Validation
+***********************************/
+ //  $('#main form').parent().prepend('<div class="errormessage" style="color:#990000; display:none;"></div>');
+	// $(":input").each(function (i){
+	// 	var input = $(this);
+	// 	var tempValue = input.attr('value');
+	// 	if (tempValue != "" && input.attr('type') != 'radio' && input.attr('type') != 'checkbox'){
+	// 		inputCheck(input);
+	// 	};
+	// 	input.blur(function() {
+	// 		inputCheck(input);
+	// 	});
+	// });
+
+	// $('#main form').submit(function(){
+	//   var formID = $(this).attr('id');
+ //    if(formID == 'user-login'){
+ //      return true;
+ //    } else if(formID.indexOf('Demo') != -1){
+	// 		return false;
+ //    } else{
+ //     return validateForm(formID);
+ //    }
+ //  });
+
+/***********************************
+  Form validation
+***********************************/
+// var errMsg = '';
+// var radioCollection = 'Empty';
+
+// validateForm = function(formID){
+// 	radioCollection = '';
+// 	errMsg = '';
+// 	$('#main #'+formID).find(":input").each(function (i) {
+// 		inputCheck($(this));
+// 	});
+// 	$errormessage = $('#main .errormessage');
+// 	if (errMsg.length > 0) {
+// 			$errormessage.html(errMsg);
+// 			$errormessage.show(800);
+// 			errMsg = '';
+// 			return false;
+// 	} else {
+// 			$errormessage.hide(800,function(){
+//   			$errormessage.html('');
+// 			});
+// 			return true;
+// 	};
+// };
+
+// function inputCheck(input) {
+//   // makes sure the placeholder fix isn't butsting things/ people aren't entering what the placeholder says
+//   if (input.val() == input.attr('placeholder')) {
+//     input.val('');
+//   }
+
+//   var inputType = input.attr('type');
+//   var required = input.hasClass('required');
+// 		if (required == false){
+// 			required = input.hasClass('validate');
+// 		};
+//   var inputTitle = input.attr('title');
+//   if (!inputTitle){
+//     inputTitle = input.attr('placeholder');
+//   }
+//   if (!inputTitle){
+//     var inputParent = input;
+//     var inputLoopCount = 0;
+//       do{
+//         inputParent = inputParent.parent();
+//         inputTitle = inputParent.find('label').text()
+//         inputLoopCount++;
+//         if (inputLoopCount>3)return;
+//       } while(!inputTitle);
+//   }
+//   var inputValue = input.val();
+//   if (inputType == 'radio') {
+//     var inputName = input.attr('name');
+//     if (radioCollection != inputName) {
+//       var inputValue = $('input:radio[name=' + inputName + ']:checked').val();
+//       radioCollection = inputName;
+//       validateRadio(inputTitle, inputValue, input.parent(), required);
+//     };
+//   } else if (inputType == 'checkbox') {
+// 		inputValue = input.attr('checked');
+//     validateCheckbox(inputTitle, inputValue, input, required);
+//   }else if (input.is('textarea') == true) {
+//     validateTextarea(inputTitle, inputValue, input, required);
+//   } else if (input.is('select') == true ) {
+//     validateSelect(inputTitle, inputValue, input, required);
+//   } else if (inputType == 'text' || inputType == 'password' || inputType == 'phone' || inputType == 'date' || inputType == 'number' || inputType == 'tel' || inputType == 'email') {
+//     validateField(inputTitle, inputValue, input, required);
+//   };
+// };
+
+// function validateTextarea(name, value, textarea, required) {
+//     if (value == '' && (required == 'true' || required == true)) {
+//         errMsg += "Please enter a value for " + name + ".<br>";
+//         addInputClass(textarea,'empty');
+//     } else {
+//         removeInputClass(textarea,'empty');
+//     };
+// };
+
+// function validateSelect(name, value, selectList, required) {
+//     if (value == '' && (required == 'true' || required == true)) {
+//         errMsg += "Please select " + name + ".<br>";
+//         addInputClass(selectList,'empty');
+//     } else {
+//         removeInputClass(selectList,'empty');
+//     };
+//     var selectName = selectList.attr('name');
+//     var selectNameNumber = $('[name="' + selectName + '"]').length;
+//     if (selectNameNumber != 1) {
+//         var selectID = selectList.attr('id');
+//         var selectHiddenID = selectID + '_Hidden';
+//         if (selectList.val() == 'Other') {
+//             var selectOtherID = selectID + '_Other';
+//             var selectValue = $('#' + selectOtherID).val();
+//             $('#' + selectHiddenID).val(selectValue);
+//         } else {
+//             $('#' + selectHiddenID).val(selectList.val());
+//         };
+//     };
+// };
+
+// function validateCheckbox(name, value, checkbox, required) {
+//     if ((value == undefined || value == '') && (required == 'true' || required == true)) {
+//         errMsg += "Please select " + name + ".<br>";
+//          addInputClass(checkbox,'empty')
+//     } else {
+//          removeInputClass(checkbox,'empty');
+//     };
+// };
+
+// function validateRadio(name, value, radio, required) {
+//     if (value == undefined && (required == 'true' || required == true)) {
+//         errMsg += "Please select " + name + ".<br>";
+//          addInputClass(radio,'empty')
+//     } else {
+//          removeInputClass(radio,'empty');
+//     };
+// };
+
+// var passwordVal = '';
+
+// validateField = function(name, value, input, required) {
+//   var vtype = 'text';
+//   if (input.hasClass('v_numbers') == true) {
+//       vtype = 'numbers';
+//   } else if (input.hasClass('v_zip') == true) {
+//       vtype = 'zip';
+//   } else if (input.hasClass('v_phone') == true || input.attr('type') == 'tel') {
+//       vtype = 'phone';
+//   } else if (input.hasClass('v_email') == true) {
+//       vtype = 'email';
+//   } else if (input.hasClass('v_URL') == true) {
+//       vtype = 'URL';
+//   } else if (input.hasClass('v_password') == true || input.attr('type') == 'password') {
+//       vtype = 'password';
+//   } else if (input.hasClass('v_dob') == true) {
+//       vtype = 'dob';
+// 	} else if (input.hasClass('v_date') == true) {
+//       vtype = 'date';
+// 	};
+
+// 	if (input.attr('v_type')){
+// 		vtype = input.attr('v_type');
+// 		//console.log(vtype);
+// 	};
+
+//   var invalidChar;
+//   var errMsgText;
+//   var invalidMsgText = "Please enter a valid " + name + ".<br>";
+//   switch (vtype) {
+//   case 'numbers':
+//     invalidChar = /[^0-9\s\-\.]/;
+//     errMsgText = "Please remove the letter or the invalid characters \/\|\!\@\#\$\%\^\&\*\(\)\+\=\{\}\?\:\"', from the " + name + " field.<br>";
+//     break;
+//   case 'number':
+//     invalidChar = /[^0-9\s\-\.]/;
+//     errMsgText = "Please remove the letter or the invalid characters \/\|\!\@\#\$\%\^\&\*\(\)\+\=\{\}\?\:\"', from the " + name + " field.<br>";
+//     break;
+//   case 'zip':
+//     invalidChar = /[^a-zA-Z0-9\s\-\.\,]/;
+//     errMsgText = "Please remove the letter or the invalid characters \/\|\!\@\#\$\%\^\&\*\(\)\+\=\{\}\?\:\"', from the " + name + " field.<br>";
+//     break;
+//   case 'phone':
+//     invalidChar = /[^0-9\s\-\(\)\.\[\]\+ext]/;
+//     errMsgText = "Please remove the letter or the invalid characters \/\|\!\@\#\$\%\^\&\*\\,\+\=\{\}\?\:\"' from the " + name + " field.<br>";
+//     break;
+//   case 'email':
+//     invalidChar = /^(?:[a-zA-Z0-9_.-])+@(?:[a-zA-Z0-9-])+\.(?:[a-zA-Z0-9_.]{2,8})+$/;
+//     errMsgText = "Please enter a valid e-mail address.<br>";
+//     break;
+//   case 'URL':
+//     invalidChar = /^(?:ftp|http|https)?(?:\:)?(?:\/\/)?(?:[w]{0,3})?[0-9a-zA-Z\?\@\%\/]+\.[0-9a-zA-Z\?\@\%\.\/]+/;
+//     errMsgText = "Please enter a valid web address.<br>";
+//     break;
+//   case 'password':
+//     invalidChar = /\|/;
+//     errMsgText = "Please choose another password without a '|'.<br>";
+//     break;
+//   case 'dob':
+//     invalidChar = /[^0-9\/]/;
+//     errMsgText = "Please remove the letter or the invalid characters \/\|\!\@\#\$\%\^\&\*\(\)\+\=\{\}\?\:\"', from the " + name + " field.<br>";
+//     break;
+//   case 'text':
+//     invalidChar = /[^a-zA-Z0-9\s\-\.]/;
+//     errMsgText = "Please remove the invalid characters \/\|\!\@\#\$\%\^\&\*\(\)\,\+\=\{\}\?\:\"' from the " + name + " field.<br>";
+//     break;
+// 	case 'taxid':
+// 		invalidChar = /^([0-9]{3})([\-]?)([0-9]{2})([\-]?)([0-9]{4})$/;
+//     errMsgText = "Please enter a valid Tax ID (or SSN if Sole Proprietorship).<br>";
+// 		break;
+// 	case 'checkingnumber':
+// 		invalidChar = /^[0-9A-Za-z]+$/;
+//     errMsgText = "Please remove the invalid characters \/\|\!\@\#\$\%\^\&\*\(\)\,\+\=\{\}\?\:\"' from the " + name + " field.<br>";
+// 		break;
+// 	case 'senumber':
+// 		invalidChar = /^[0-9]{0,10}$/;
+//     errMsgText = "Please enter a valid SE number.<br>";
+// 		break;
+// 	case 'routingnumber':
+// 		invalidChar = /^[0-9]{8,9}$/;
+//     errMsgText = "Please enter a valid Routing Number.<br>";
+// 		break;
+// 	case 'date':
+// 		invalidChar = /^([0-9]{2}|[0-9]{1})\/([0-9]{2}|[0-9]{1})\/[0-9]{4}$/;
+//     errMsgText = "Please enter a valid Date.<br>";
+// 		break;
+// 	case 'ssn':
+// 		invalidChar = /^[0-9]{9}$/;
+//     errMsgText = "Please enter a valid Social Security Number.<br>";
+// 		break;
+// 	case 'ssn2':
+// 		invalidChar = /^[0-9]{2}$/;
+//     errMsgText = "Please enter a valid Social Security Number.<br>";
+// 		break;
+// 	case 'ssn3':
+// 		invalidChar = /^[0-9]{3}$/;
+//     errMsgText = "Please enter a valid Social Security Number.<br>";
+// 		break;
+// 	case 'ssn4':
+// 		invalidChar = /^[0-9]{4}$/;
+//     errMsgText = "Please enter a valid Social Security Number.<br>";
+// 		break;
+//   default:
+//     invalidChar = /[^a-zA-Z0-9\s\-]/;
+//     errMsgText = "Please remove the invalid characters \/\|\!\@\#\$\%\^\&\*\(\)\,\+\=\{\}\?\:\"'from the " + name + " field.<br>";
+//   };
+
+//   if ((value == "" || value == name) && (required == 'true' || required == true)) {
+//     errMsg += invalidMsgText;
+//     addInputClass(input,'empty');
+//     removeInputClass(input,'invalid');
+//     removeInputClass(input,'invalid_format');
+//   } else if (vtype == 'password') {
+// 		if (input.hasClass('pMatch') == true && value != passwordVal){
+// 			errMsg += "Passwords do not match";
+// 			addInputClass(input,'invalid');
+// 			removeInputClass(input,'empty');
+// 		} else if(value.length < 6) {
+// 			errMsg += "Please enter a " + name + " of at least 6 characters.<br>";
+// 			addInputClass(input,'invalid');
+// 			removeInputClass(input,'empty');
+// 		} else {
+// 			removeInputClass(input,'invalid');
+// 			removeInputClass(input,'empty');
+// 			passwordVal = value;
+// 		};
+//   } else if (value != "" && value != name) {
+//     var matchArray = value.match(invalidChar);
+// 		//console.log(matchArray);
+//     if ((vtype == 'email' && !matchArray) || (vtype == 'URL' && !matchArray) || (vtype == 'taxid' && !matchArray) || (vtype == 'checkingnumber' && !matchArray) || (vtype == 'senumber' && !matchArray) || (vtype == 'routingnumber' && !matchArray) || (vtype == 'ssn2' && !matchArray) || (vtype == 'ssn3' && !matchArray) || (vtype == 'ssn4' && !matchArray) || (vtype == 'ssn' && !matchArray) || (vtype == 'date' && !matchArray)) {
+//       errMsg += errMsgText;
+//       addInputClass(input,'invalid');
+//       removeInputClass(input,'empty');
+//     } else if (vtype == 'phone' && !matchArray) {
+// 			var tempPhoneVal = value.replace(/[\.\- x]+/g,'').length;
+// 			if (tempPhoneVal < 10){
+// 				errMsg += invalidMsgText;
+// 				removeInputClass(input,'invalid');
+// 				addInputClass(input,'empty');
+// 			} else{
+// 				//Validates US with optional 1 and extentions of up to 5 digits
+// 				var phoneReg =  /^(?:[+1]{2})?[-. \(]?(?:[0-9]{3})?[-. \)]?(?:[0-9]{3})[-. ]?(?:[0-9]{4})[-. ]?(?:[extEXT.]{1,4})?[-. ]?(?:[0-9]{1,5})?$/;
+// 				var matchPhone = value.match(phoneReg);
+// 				var matchCheck = false;
+// 				if (!matchPhone){
+// 					phoneReg = /^\+?(?:[0-9]{2})[-. \(]?(?:[0-9]{1,4})?[-. \(]?(?:[0-9]{1,4})?[-. \(]?(?:[0-9]{1,4})?[-. \(]?(?:[0-9]{1,8})[-. \(]?(?:[extEXT.]{1,4})?[-. ]?(?:[0-9]{1,5})?$/;
+// 					matchPhone = value.match(phoneReg);
+// 					if (!matchPhone){
+// 						//Validate international phone numbers in EPP format
+// 						phoneReg = /^\+?[0-9]{1,3}\.[0-9]{4,14}(?:x.+)?$/;
+// 						matchPhone = value.match(phoneReg);
+// 						if (!matchPhone){
+// 							errMsg += invalidMsgText;
+// 							removeInputClass(input,'invalid');
+// 							addInputClass(input,'empty');
+// 						} else{
+// 							matchCheck = true;
+// 						};
+// 					} else{
+// 						matchCheck = true;
+// 					};
+// 				} else{
+// 					matchCheck = true;
+// 				};
+// 			};
+// 			if (matchCheck == true){
+// 				removeInputClass(input,'invalid');
+// 				removeInputClass(input,'empty');
+// 			};
+// 		} else if (vtype != 'email' && vtype != 'URL' && vtype != 'taxid' && vtype != 'checkingnumber' && vtype != 'senumber' && vtype != 'routingnumber' && vtype != 'ssn' && vtype != 'ssn2' && vtype != 'ssn3' && vtype != 'ssn4'  && matchArray && vtype != 'date'  && matchArray) {
+//       errMsg += errMsgText;
+//       addInputClass(input,'invalid');
+//       removeInputClass(input,'empty');
+// 		} else {
+//       removeInputClass(input,'invalid');
+//       removeInputClass(input,'empty');
+//     };
+//   };
+// };
+
+// function removeInputClass(input,classToggle){
+//   input.removeClass(classToggle);
+//   input.parent().removeClass(classToggle+'_p');
+// };
+
+// function addInputClass(input,classToggle){
+//   input.addClass(classToggle);
+//   input.parent().addClass(classToggle+'_p');
+// };
+
+});

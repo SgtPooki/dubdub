@@ -1,0 +1,333 @@
+/**
+ * @file
+ * Sets up actions to be sent to GA globally
+ */
+
+//sets the URI globaly on every page
+var curDomain;
+var curSubdomain;
+var currentURI;
+var dupCount = 4;
+var GAdebug;
+
+function setURI() {
+  var queryhash;
+  var querysearch = "";
+  var tempSubdomain;
+  //set GLOBAL curDomain
+  curDomain = window.location.host;
+
+  //set GLOBAL curSubdomain from the curDomain
+  tempSubdomain = curDomain.split('.');
+  curSubdomain = tempSubdomain[0];
+  curSubdomain.replace(/[a-z]+/gi, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+
+  //set GLOBAL currentURI with hash maintained and query removed
+  currentURI = window.location.pathname;
+  currentURI = currentURI.replace(/%252d/g,'-').replace(/%2d/g,'-');
+  currentURI = (currentURI.substring(currentURI.length-1) != '/') ? currentURI + '/' : currentURI;
+  //get hash
+  queryhash = window.location.hash;
+  //fix improperly formated hash strings - strip out the query (proper formating ?query#hash)
+  queryhash = (queryhash.match(/\?/) != null) ? queryhash.split('?',1) : queryhash;
+
+  //get the query string for store.
+  querysearch = window.location.search;
+  //sets the debug mode to true
+  GAdebug = (querysearch.indexOf('gadebug') != -1) ? true : false;
+  querysearch = (querysearch.indexOf('gadebug') != -1) ? "" : querysearch;
+  //removes google querystrings
+  querysearch = (querysearch.match('utm') == null) ? querysearch : querysearch = "";
+  //removes long queries
+  querysearch = (querysearch.match('&') == null) ? querysearch : querysearch.split('&',1);
+
+  //if the URI is empty then the URI is set to the current domain so that homepage events on subdomains dont all look the same
+  currentURI  =  (currentURI == '/' || currentURI == '' || currentURI == '/default.asp') ? curDomain + '/' : currentURI;
+  //check to see if the current uri is not a file and if it isnt - make sure it is ended with a /
+  currentURI  = (currentURI.match(/\/$/) == null && currentURI.match(/(\.[a-z]{3,5})$/ == null)) ? currentURI + '/' : currentURI;
+  //remove file name/type if there is one so default.asp and / are not counted as 2 separate pages
+  currentURI  = currentURI.replace(/\/(index|default)+(\.[a-z]{3,5})$/,'/') ;
+  //append hash
+  currentURI = currentURI + querysearch + queryhash;
+};
+
+//appends GA cookie data to cross domain links
+function setGACrossDomainLinks(){
+  if (curDomain.indexOf('.co.uk') != -1){
+    var tempDomain = curDomain.replace('.com','.co.uk');
+    jQuery('a[href*="'+tempDomain+'"]').each(function(){
+      var $templink = $(this);
+      if ($templink.attr('href').indexOf('.pdf') == -1){
+        ga(function(tracker) {
+          var linker = new window.gaplugins.Linker(tracker);
+          $templink.attr('href') = window.linker.decorate($templink.attr('href'));
+        });
+      };
+    });
+  }else if( curDomain.indexOf('.com') != -1 ){
+    var tempDomain = curDomain.replace('.com','.co.uk');
+    jQuery('a[href*="'+tempDomain+'"]').each(function(){
+      var $templink = $(this);
+      if ($templink.attr('href').indexOf('.pdf') == -1){
+        ga(function(tracker) {
+          var linker = new window.gaplugins.Linker(tracker);
+          $templink.attr('href') = window.linker.decorate($templink.attr('href'));
+        });
+      };
+    });
+  }
+}
+
+
+function setInternalTracking(wrapperSelector,trackTitle) {
+  wrapperSelector = (wrapperSelector) ? wrapperSelector : ".track";
+
+  //Get every instance of the class track and ad this code to it
+  jQuery(wrapperSelector).each(function(i){
+    //Set the trackTitle that will later be called as the event category to the title of the current object title
+    var $trackWrapper = {};
+    $trackWrapper = jQuery(this);
+    $trackWrapper.title = trackTitle;
+    if ($trackWrapper.title == "")
+      $trackWrapper.title = $track.attr('data-track');
+    if ($trackWrapper.title == "Get ID"){
+      $trackWrapper.title = $trackWrapper.attr('id').replace(/\-/gi,' ');
+      var tempTitleArray = $trackWrapper.title.match(/([a-z]+)|([A-Z][a-z]+)/g);
+      $trackWrapper.title = "";
+      for(var i=0; i<tempTitleArray.length;i++){
+        var spacer = (i > 0) ? " " : "";
+        $trackWrapper.title = $trackWrapper.title + spacer +tempTitleArray[i];
+      };
+    }
+
+    //Call every anchor tag inside the current track (called by its indexed track class)
+    //2014-07-10 Yixin Xia Change - included wistia_embed to be a trackElement as well
+    //Also added youtube as option
+    $trackWrapper.find('button, a, div.wistia_embed, div.youtubeVideo').each(function(i){
+
+      //set the target object that contains the data for the tracking event
+      var $trackElement = jQuery(this);
+      $trackElement.action = 'Element Click';
+      $trackElement.title = $trackWrapper.title;
+
+      if($trackElement.hasClass('duplicate')){
+        var tempTitle = ($trackElement.attr('title')) ? $trackElement.attr('title') + ' Episode ' + dupCount : 'Episode ' + dupCount;
+        $trackElement.attr('title',tempTitle);
+        dupCount++;
+      };
+
+      //Call the function with the linkname logic (that will be added to the label in the event
+      $trackElement.click(function() {
+        setPageTrackerLink($trackElement);
+        //return false; //uncommenty to stop the default action of leaving the page
+      });
+
+      if($trackElement.hasClass('youtubeVideo')){
+        $trackElement.children('iframe').bind('click', function(e){
+          console.log('clicked yt');
+          setPageTrackerLink($trackElement);
+        });
+      }
+
+      if(GAdebug == true){
+      //Call the function with the linkname logic (that will be added to the label in the event
+        $trackElement.hover(
+          function() {
+            setPageTrackerLink($trackElement);
+          },
+          function() {
+          }
+        );
+      };
+    });
+
+    //Call every anchor tag inside the current track (called by its indexed track class)
+    $trackWrapper.find('.field-name-field-faqs .field-name-field-faq-question').each(function(i){
+      //set the target object that contains the data for the tracking event
+      var $trackElement = jQuery(this);
+      $trackElement.action = 'FAQ S/H';
+      $trackElement.title = $trackWrapper.title;
+      $trackElement.click(function() {
+        if (!$trackElement.hasClass('open')){
+          setPageTrackerLink($trackElement);
+          //return false; //uncommenty to stop the default action of leaving the page
+        };
+      });
+    });
+
+    $trackWrapper.find('input[type="submit"]').each(function(i){
+      //set the target object that contains the data for the tracking event
+      var $trackElement = jQuery(this);
+      $trackElement.action = 'Submit';
+      $trackElement.title = $trackWrapper.title;
+      //Call the function with the linkname logic (that will be added to the label in the event
+      $trackElement.click(function() {
+        setPageTrackerLink($trackElement);
+        //return false; //uncommenty to stop the default action of leaving the page
+      });
+    });
+  });
+};
+
+function setLinkName(oTarget) {
+  //gets all of the text and text only inside the anchor
+  var linkName = oTarget.text();
+  //if there is an image inside of the ancor it gets the alt text instead
+  if (oTarget.html().indexOf('<img')!=-1){
+    if(!oTarget.hasClass('wistia_embed')){
+      linkName = oTarget.find('img').attr('alt')+ ' img';
+    }
+  };
+  if (oTarget.html().indexOf('<option')!=-1){
+    linkName = oTarget.attr('name');
+    linkName += ' - ' + oTarget.find('option:selected').text();
+  };
+  if (oTarget.attr('type') == 'submit'){
+    linkName = oTarget.val();
+  };
+  //2014-07-10 Yixin Xia change wistia video's label to be domain - Wistia Video + title.attribute
+  if (oTarget.hasClass('wistia_embed')){
+    linkName = 'Wistia Video' + ' | ' + oTarget.attr('title');
+  }else if(oTarget.hasClass('youtubeVideo')){
+    linkName = 'Youtube Video' + ' | ' + oTarget.attr('title');
+  }else{
+  //add in the title attribute to differentiate different buttons and links with the same text()
+    linkName += (oTarget.attr('title')) ? ' | ' + oTarget.attr('title') : '';
+  }
+  //removes everything but whitespaces, dashes, letters, and numbers
+  linkName = linkName.replace(/[^\w\d \-\,\|]+/g,'');
+  //removes all whitespaces and replaces them with spaces
+  linkName = linkName.replace(/[\s]+/g,' ');
+  return linkName;
+};
+
+function setPageTrackerLink($trackElement) {
+  $trackElement.linkName = setLinkName($trackElement);
+  $trackElement.linkRelPath = $trackElement.attr('rel');
+  //sets the action to something different depending on the class
+  if ($trackElement.html().indexOf('.wistia') == true){
+    $trackElement.action = 'Play Video';
+    $trackElement.title = 'Videos'
+  };
+  //removes duplicate -
+  $trackElement.linkName = $trackElement.linkName.replace(/( - )+/g,' - ');
+  //calls the event method with the title of the wrapper as the category, the set action, and the label is the URI plus the link name
+  try{
+    //ga('send', 'event',$trackElement.title,$trackElement.action,currentURI+' '+$trackElement.linkName);
+
+      dataLayer.push({
+          'event':'trackClick',
+          'eventWhat':$trackElement.linkName,
+          'eventWhere':$trackElement.title,
+          'eventHow':$trackElement.action
+      });
+
+    if (GAdebug == true) jQuery('.gaDebugWindow').text($trackElement.title+", "+$trackElement.action+", "+' '+$trackElement.linkName);
+  }
+  catch(err){};
+};
+
+function setPromoTracking(promoName) {
+  jQuery(promoName).each(function(i){
+    var $promo = jQuery(this);
+    if ( $promo.html().indexOf('<img') != -1 ){
+      var timer = 0;
+      var promoTag;
+      if ( $promo.attr('data-title' ) != undefined ){
+        var promoTag = $promo.attr('data-title');
+      }
+      else if ( $promo.attr('title' ) != undefined ) {
+        var promoTag = $promo.attr('title');
+        $promo.attr('data-title', promoTag).removeAttr('title');
+      }
+      else {
+        var promoTag = 'no-tag';
+      }
+      var promoBottom = $promo.offset();
+      promoBottom = promoBottom.top + $promo.height();
+      var $window = jQuery(window);
+      var windowHeight = $window.height();
+      if (promoBottom < windowHeight) {
+        setPromoVar(promoTag);
+      }
+      else {
+        $window.scroll(function() {
+          if (timer) {
+            clearTimeout(timer);
+          }
+          // Use a buffer so we don’t call trackLocation too often.
+          if (timer != 'clear') {
+            timer = setTimeout(function(){
+              var windowBottom = $window.scrollTop() + windowHeight;
+              if(promoBottom < windowBottom){
+                setPromoVar(promoTag);
+                clearTimeout(timer);
+                timer = 'clear';
+              };
+            }, 100);
+          };
+        });
+      };
+    }
+    else {
+      $promo.removeAttr('title');
+    };
+  });
+};
+
+function setPromoVar(promoName) {
+
+  if (!promoName) return;
+  var promoNameEscaped = promoName.replace("-","\-");
+  var promoReplace = new RegExp("("+promoNameEscaped+")([0-9]{0,2})", "gi");
+  var custVar = getcookie("__utmv");
+  custVar = custVar.split('^',1);
+  custVar = custVar[0].split('=');
+  if (custVar[1] == 'Promo Tracking'){
+    custVar = custVar[2];
+    if(custVar.indexOf(promoName) != -1){
+      function incrementPromo(match,str2,str3){
+       if(str3){
+        str3 = parseInt(str3)+1;
+        return str2+str3;
+       }else{
+         return;
+       }
+      }
+      custVar = custVar.replace(promoReplace, incrementPromo);
+      //ga('set', 'dimension1', custVar);
+      if (GAdebug == true) jQuery('.gaDebugWindow').text('Promo Tracking :' + custVar);
+
+    } else{
+      //ga('set', 'dimension1', custVar+'|'+promoName+'1');
+      if (GAdebug == true) jQuery('.gaDebugWindow').text('Promo Tracking :' + custVar+'|'+promoName+'1');
+    }
+
+  } else{
+    //ga('set', 'dimension1', promoName+'1');
+    if (GAdebug == true) jQuery('.gaDebugWindow').text('Promo Tracking :' + promoName+'1');
+  }
+};
+
+jQuery(document).ready(function(){
+  setURI();
+  if(GAdebug == true){
+    var mainCount = jQuery('#main a[href]').length;
+    jQuery( '<div class="gaDebugWindow" style="position: fixed; top: 0; left: 0; padding: .5em; color: #000; background: #BBB; font-size: 14px; z-index:1000;">' + mainCount + '</div>' ).appendTo( 'body' );
+    jQuery('a[href]').each(function(i){
+      var $curlink = jQuery(this);
+      if ($curlink.parent().parent().parent().hasClass('contextual-links-wrapper') == false && $curlink.parent().hasClass('contextual-links-wrapper') == false) {
+        var temphref = $curlink.attr('href');
+        $curlink.attr('href',temphref+'?gadebug');
+      };
+    });
+  }
+   setInternalTracking('#footer','Global Footer');
+   setInternalTracking('#header','Global Navigation');
+   setInternalTracking('#main-content',curSubdomain+' Main Content');
+   setInternalTracking('#main-nav','Global Navigation');
+   setInternalTracking('#header_content-inside','Hamburger/Demo');
+
+
+  setGACrossDomainLinks();
+});

@@ -1,0 +1,398 @@
+$(document).ready(function(){
+	$.fn.exists = function(){
+		return this.length > 0;
+	}
+
+	if (window.PIE) {
+		$('.ie-fix, #footer .bottom .socials a').each(function() {
+			PIE.attach(this);
+		});
+	}
+
+	$("#header").sticky({ topSpacing: 0 });
+	$("#header_content").sticky({ topSpacing: 0 });
+
+	// detect touchDevice
+	function isTouchDevice() {
+		var el = document.createElement('div');
+			el.setAttribute('ongesturestart', 'return;');
+		if(typeof el.ongesturestart == "function"){
+			return true;
+		}else {
+			return false
+		}
+	}
+
+  if ($('.front .visual').exists()){
+	  $('.front .visual').height($(window).height());
+  }
+	if(!isTouchDevice()&& !window.PIE) {
+		if ($('.summit-area').exists()) {
+			$('.summit-area').parallax("50%", 0);
+		}
+
+		if ($('.experience-section').exists()) {
+			$('.experience-section').parallax("50%", 0);
+		}
+
+		if ($('.api-info').exists()) {
+			$('.api-info').parallax("50%", 0.01);
+		}
+
+		if ($('.service-package').exists()) {
+			$('.service-package').parallax("50%", 0.1);
+		}
+
+		if ($('.visual .bg').exists()) {
+			$(window).scroll(function(){
+				var win_top = $(window).scrollTop();
+				var temp_dif = (win_top - $('.visual .bg').offset().top) * 0.6;
+				$('.visual .bg').css({
+					marginTop: temp_dif + 'px',
+					marginBottomp: - temp_dif + 'px'
+				});
+			});
+		}
+	}
+
+	if ($('#flexslider-1').exists()) {
+		var $flex = $('#flexslider-1'),
+			offset = '100%';
+
+		$flex.flexslider({
+			directionNav: false,
+			slideshow: false,
+			manualControls: $flex.find('.switcher').find('a'),
+			start: function(slider) {
+				var $img2 = $(slider.slides[slider.currentSlide]).find('.img-2'),
+					$img3 = $(slider.slides[slider.currentSlide]).find('.img-3');
+
+				if ($img2.exists()) {
+					$img2.delay(500).animate({
+						'margin-bottom': '+=' + offset
+					});
+				}
+				if ($img3.exists()) {
+					$img3.delay(800).animate({
+						'margin-bottom': '+=' + offset
+					});
+				}
+			},
+			before: function(slider) {
+				var $img2 = $(slider.slides[slider.currentSlide]).find('.img-2'),
+					$img3 = $(slider.slides[slider.currentSlide]).find('.img-3');
+
+				if ($img2.exists()) {
+					$img2.animate({
+						'margin-bottom': '-=' + offset
+					});
+				}
+				if ($img3.exists()) {
+					$img3.animate({
+						'margin-bottom': '-=' + offset
+					});
+				}
+			},
+			after: function(slider) {
+				var $img2 = $(slider.slides[slider.currentSlide]).find('.img-2'),
+					$img3 = $(slider.slides[slider.currentSlide]).find('.img-3');
+
+				if ($img2.exists()) {
+					$img2.delay(500).animate({
+						'margin-bottom': '+=' + offset
+					});
+				}
+				if ($img3.exists()) {
+					$img3.delay(800).animate({
+						'margin-bottom': '+=' + offset
+					});
+				}
+			}
+		});
+	}
+
+	if ($('#flexslider-2').exists()) {
+		var $flex = $('#flexslider-2');
+
+		$flex.flexslider({
+			directionNav: false,
+			slideshow: false,
+			manualControls: $flex.find('.switcher').find('a'),
+			start: function(slider) {
+				var $img2 = $(slider.slides[slider.currentSlide]).find('.img-2');
+
+				if ($img2.exists()) {
+					$img2.delay(500).animate({
+						'margin-bottom': '+=' + offset
+					});
+				}
+			},
+			before: function(slider) {
+				var $img2 = $(slider.slides[slider.currentSlide]).find('.img-2');
+
+				if ($img2.exists()) {
+					$img2.animate({
+						'margin-bottom': '-=' + offset
+					});
+				}
+			},
+			after: function(slider) {
+				var $img2 = $(slider.slides[slider.currentSlide]).find('.img-2');
+
+				if ($img2.exists()) {
+					$img2.delay(500).animate({
+						'margin-bottom': '+=' + offset
+					});
+				}
+			}
+		});
+	}
+
+	if ($('#player').exists()) {
+		flowplayer(
+		"player",
+		{
+			src: "swf/flowplayer-3.2.7.swf",
+			wmode: 'opaque'
+		},
+		{
+			clip: {
+				autoPlay: false,
+				autoBuffering: true
+			}
+		});
+	}
+
+	if ($('#tabs-1').exists()) {
+		$('#tabs-1').easyResponsiveTabs({
+			type: 'vertical',
+			width: 'auto',
+			fit: true
+		});
+	}
+
+	if ($('.service-description').find('.item').exists()) {
+		$('.service-description').find('.item').find('.more').click(function() {
+			var $this = $(this);
+
+			$this.next('.entity').slideToggle(
+				function() {
+					$this.closest('.item').toggleClass('active');
+					$this.closest('.service-description').find('.item.active').not($this.closest('.item')).removeClass('active').find('.entity').slideToggle();
+				}
+			);
+			return false;
+		});
+	}
+
+	if ($('#items-1').exists()) {
+		/*$('#items-1').mixItUp({
+			selectors: {
+				filter: '.btn-filter'
+			}
+		});*/
+        $('#items-1').mixItUp({
+            load:{
+                filter: 'all',
+                sort: 'age:desc'
+            }
+        });
+	}
+
+	if ($('.fancybox-media').exists()) {
+		$('.fancybox-media').fancybox({
+			maxWidth    : 800,
+			maxHeight   : 600,
+			fitToView   : false,
+			width       : '70%',
+			height      : '70%',
+			autoSize    : false,
+			closeClick  : false,
+			openEffect  : 'elastic',
+			closeEffect : 'none',
+			beforeLoad  : function() {
+				var url = this.href;
+				url = url.replace(new RegExp("watch\\?v=", "i"), 'v/');
+				url += '?fs=1&autoplay=1';
+				this.href = url
+			},
+			helpers : {
+				media : {},
+				buttons : {}
+			}
+		});
+	}
+
+	if ($('.fancy-popup').exists()) {
+		$('.fancy-popup').fancybox({
+			'padding' : 0,
+			'wrapCSS' : 'popup'
+		});
+	}
+
+	$('.goto').click(function() {
+		var href = $(this).attr('href'),
+			offset = $('#header').outerHeight();
+
+		$.scrollTo($(href), 800, {offset: {top:-offset} });
+
+		return false;
+	});
+
+	$('.btn-to-top').click(function() {
+		$.scrollTo(0, 800);
+
+		return false;
+	});
+
+	if ($('.popup-content .partner-form form').exists()) {
+		customForm.lib.domReady(function(){
+			customForm.customForms.replaceAll();
+		});
+	}
+});
+
+
+
+function initPage()
+{
+	clearFormFields({
+		clearInputs: true,
+		clearTextareas: true,
+		passwordFieldText: true,
+		addClassFocus: "focus",
+		filterClass: "default"
+	});
+}
+function clearFormFields(o)
+{
+	if (o.clearInputs == null) o.clearInputs = true;
+	if (o.clearTextareas == null) o.clearTextareas = true;
+	if (o.passwordFieldText == null) o.passwordFieldText = false;
+	if (o.addClassFocus == null) o.addClassFocus = false;
+	if (!o.filter) o.filter = "default";
+	if(o.clearInputs) {
+		var inputs = document.getElementsByTagName("input");
+		for (var i = 0; i < inputs.length; i++ ) {
+			if((inputs[i].type == "text" || inputs[i].type == "password") && inputs[i].className.indexOf(o.filterClass)) {
+				inputs[i].valueHtml = inputs[i].value;
+				inputs[i].onfocus = function ()	{
+					if(this.valueHtml == this.value) this.value = "";
+					if(this.fake) {
+						inputsSwap(this, this.previousSibling);
+						this.previousSibling.focus();
+					}
+					if(o.addClassFocus && !this.fake) {
+						this.className += " " + o.addClassFocus;
+						this.parentNode.className += " parent-" + o.addClassFocus;
+					}
+				}
+				inputs[i].onblur = function () {
+					if(this.value == "") {
+						this.value = this.valueHtml;
+						if(o.passwordFieldText && this.type == "password") inputsSwap(this, this.nextSibling);
+					}
+					if(o.addClassFocus) {
+						this.className = this.className.replace(o.addClassFocus, "");
+						this.parentNode.className = this.parentNode.className.replace("parent-"+o.addClassFocus, "");
+					}
+				}
+				if(o.passwordFieldText && inputs[i].type == "password") {
+					var fakeInput = document.createElement("input");
+					fakeInput.type = "text";
+					fakeInput.value = inputs[i].value;
+					fakeInput.className = inputs[i].className;
+					fakeInput.fake = true;
+					inputs[i].parentNode.insertBefore(fakeInput, inputs[i].nextSibling);
+					inputsSwap(inputs[i], null);
+				}
+			}
+		}
+	}
+	if(o.clearTextareas) {
+		var textareas = document.getElementsByTagName("textarea");
+		for(var i=0; i<textareas.length; i++) {
+			if(textareas[i].className.indexOf(o.filterClass)) {
+				textareas[i].valueHtml = textareas[i].value;
+				textareas[i].onfocus = function() {
+					if(this.value == this.valueHtml) this.value = "";
+					if(o.addClassFocus) {
+						this.className += " " + o.addClassFocus;
+						this.parentNode.className += " parent-" + o.addClassFocus;
+					}
+				}
+				textareas[i].onblur = function() {
+					if(this.value == "") this.value = this.valueHtml;
+					if(o.addClassFocus) {
+						this.className = this.className.replace(o.addClassFocus, "");
+						this.parentNode.className = this.parentNode.className.replace("parent-"+o.addClassFocus, "");
+					}
+				}
+			}
+		}
+	}
+	function inputsSwap(el, el2) {
+		if(el) el.style.display = "none";
+		if(el2) el2.style.display = "inline";
+	}
+}
+
+//ScrollToButton function 2014-07-28 Katie Garcia
+var scrollToModule = {
+    scrollFunction: function(){
+        $('.scrollToBtn').click(function(e) {
+            var target = $('.' + $(this).data("goto"));
+            var targetOffset = $(this).data("offset");
+            var targetSpeed = 600;
+            if(target){
+                $.scrollTo(target, targetSpeed, {offset:{top:targetOffset}});
+                return false;
+            }
+        });
+    },
+    initializeModule: function() {
+        scrollToModule.scrollFunction();
+    }
+};
+scrollToModule.initializeModule();
+
+// PageNameModule allows you to append classes to body tag using the following html
+// <span data-pagename="new-class" id="nodeAlias"></span>
+// Katie Garcia 06/2015
+var pageNameModule = {
+    currentPageName: [],
+    nodeAlias: $('#nodeAlias').data('pagename'),
+    checkPageName: function(bodyClass){
+      var that=this;
+      if(this.nodeAlias){
+          this.currentPageName.push(this.nodeAlias);
+      }
+    },
+    addClassToBody: function(){
+      $.each(this.currentPageName, function(i, v){
+          $('body').addClass(v);
+      });
+    },
+    initializeModule: function(){
+      this.checkPageName($('body').attr('class').split(' '));
+      this.addClassToBody();
+    }
+};
+pageNameModule.initializeModule();
+
+if (window.addEventListener)
+	window.addEventListener("load", initPage, false);
+else if (window.attachEvent)
+	window.attachEvent("onload", initPage);
+
+//Browser detection
+//Appends user agent string to <html> tag
+//Then you can style it like: html[data-useragent*='MSIE 10.0'] h1 {color:blue;}
+//Katie Garcia 06/2015
+var userAgentSniffer = {
+	initializeModule: function(){
+		var doc = document.documentElement;
+		doc.setAttribute('data-useragent', navigator.userAgent);
+	}
+}
+userAgentSniffer.initializeModule();

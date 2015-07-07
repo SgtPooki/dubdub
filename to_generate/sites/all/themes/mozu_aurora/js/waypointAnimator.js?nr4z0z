@@ -1,0 +1,119 @@
+// ------------
+// Waypoint Animator
+// ------------
+// Lets you use simple html to set up waypoints, with customizable target classes and offset position
+// Katie Garcia 05.12.2015
+
+// ------------
+// Dependencies
+// ------------
+// Waypoints + Inview extension
+// - http://imakewebthings.com/waypoints/
+// ClassList
+// - https://github.com/eligrey/classList.js
+
+// ------------
+// How to use
+// ------------
+// Add an id starting with "js-waypoint-" to any element in your html with specific data attributes like so:
+// <div id="js-waypoint-1" data-target-class="nav-item-1" data-offset="100" data-persistent="true" data-add-class="js-active">
+// And an element to target (it can also target itself)
+// <a href="#" class="nav-item-1">
+// This script will automatically listen for the sending element to hit its waypoint and
+// then trigger a class change on its target element
+//
+// ------------
+// Options
+// ------------
+// data-target-class="nav-item-1" < defines the target element
+// data-offset="100"  < # of pixels offset from top of window to trigger the waypoint
+// data-persistent="true" < if false, the class will reset when the waypoint element is out of view
+// data-add-class="js-active" < defines the class to add to target element
+
+var waypointAnimator = {
+
+  init: function() {
+    this.detectIds();
+  },
+
+  detectIds: function() {
+    var pointsPrefix = /^js-waypoint-/;
+    var pointsArray=[];
+    var els=document.getElementsByTagName('*');
+    for (var i=0; i < els.length; i++) {
+      if (pointsPrefix.test((els[i]).id)) {
+        pointsArray.push(els[i].id);
+      }
+    }
+    if (pointsArray.length > 0) {
+      //elements exist with id js-point-*
+      waypointAnimator.bindClasses(pointsArray);
+    }
+    else {
+      // scenes don't exist
+    }
+  },
+
+  bindClasses: function(a) {
+    //console.log(a);
+    var index;
+    for (index = 0; index < a.length; index++) {
+
+      var waypoint = new Waypoint({
+        element: document.getElementById(a[index]),
+        handler: function(direction) {
+          //console.log('waypoint reached');
+
+          //get data attributes fom current elem
+          var classToAdd = this.element.dataset.addClass;
+          var targetClass = this.element.dataset.targetClass;
+          var targetArray = document.getElementsByClassName(targetClass);
+
+          // add class to each elem in target array
+          for (var i=0; i < targetArray.length; i++) {
+            (targetArray[i]).classList.add(classToAdd);
+          }
+        },
+        offset: function () {
+          if (this.element.dataset.offset) {
+            var offset = this.element.dataset.offset;
+            //console.log('offset is ' + this.element.dataset.offset);
+            //if offset is a %, ignore it
+            //for some reason, i can't get it to apply % offsets
+            if(offset.indexOf('%') > -1) {
+              return null;
+            }
+            else {
+              return this.element.dataset.offset;
+            }
+          }
+        }
+        //offset: this.element.dataset.offset
+      })
+
+      var inview = new Waypoint.Inview({
+        element: document.getElementById(a[index]),
+        exited: function(direction) {
+          var persistent = this.element.dataset.persistent;
+          var classToAdd = this.element.dataset.addClass;
+          var targetClass = this.element.dataset.targetClass;
+          var targetArray = document.getElementsByClassName(targetClass);
+
+          // if persistent = false
+          // remove class from each elem in array when waypoint leaves window
+          if (persistent === "false") {
+            for (var i=0; i < targetArray.length; i++) {
+              //console.log(persistent);
+              (targetArray[i]).classList.remove(classToAdd);
+            }
+          }
+        }
+      })
+
+    }
+  }
+};
+
+(function() {
+  waypointAnimator.init();
+})();
