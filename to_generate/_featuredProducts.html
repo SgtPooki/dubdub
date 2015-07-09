@@ -1,0 +1,9 @@
+<h2>[%= featuredProducts.total_results_size %] featured products:</h2>
+[% _.each(featuredProducts.results, function(product) { %]
+  <div class="item">
+    <a href="[%= pathTo('product', {uid: product.uid}) %]">
+      <h3>[%= product.getText('product.name') %]</h3>
+    </a>
+    <img data-src="[%= product.getImageView('product.image', 'icon').url %]">
+  </div>
+[% }) %]

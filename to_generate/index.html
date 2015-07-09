@@ -1,50 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Your prismic.io singlepage project</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="main.css" media="all" rel="stylesheet" type="text/css" />
-  <script src="https://prismicio.github.io/baked.js/baked-0.3.0.js"></script>
+  <!-- include common head -->
+  [%- partial('/head') %]
+  <!-- page-specific head -->
+  <title>[%= homePage.results[0].getText('article.title') %]</title>
+  <meta name="description" content="[%= homePage.results[0].getText('article.short_lede') %]">
+  <!-- grab some data from prismic (which needs to happen here, and then can be used in partials) -->
+  <script type="text/prismic-query" data-binding="homePage">
+    [
+      [:d = at(document.tags, ["homePage"])]
+    ]
+  </script>
+  <script type="text/prismic-query" data-binding="featuredProducts" data-query-orderings="[my.product.name]">
+    [
+      [:d = any(document.type, ["product"])]
+      [:d = at(document.tags, ["Featured"])]
+    ]
+  </script>
 </head>
 <body>
 
-  <div class="header">
-    <a href="/">
-      <img src="https://www.mozu.com/sites/all/themes/mozu_aurora/logo.png">
-    </a>
-  </div>
+  <!-- include the common site header -->
+  [%- partial('/header') %]
 
+  <!-- container -->
   <div class="container">
 
-    <script type="text/prismic-query" data-binding="homePage">
-      [
-        [:d = at(document.tags, ["homePage"])]
-      ]
-    </script>
-
-    <h1>Super Headline</h1>
-    <p>Supporting description tagline</p>
+    <!-- hero -->
+    <h1>[%= homePage.results[0].getText('article.title') %]</h1>
+    <p>[%= homePage.results[0].getText('article.short_lede') %]</p>
     <br>
 
-    <script type="text/prismic-query" data-binding="featuredProducts" data-query-orderings="[my.product.name]">
-      [
-        [:d = any(document.type, ["product"])]
-        [:d = at(document.tags, ["Featured"])]
-      ]
-    </script>
-
-    <h2>[%= featuredProducts.total_results_size %] featured products:</h2>
-    [% _.each(featuredProducts.results, function(product) { %]
-      <div class="item">
-        <a href="[%= pathTo('product', {id: product.id}) %]">
-          <h3>[%= product.getText('product.name') %]</h3>
-        </a>
-        <img data-src="[%= product.getImageView('product.image', 'icon').url %]">
-      </div>
-    [% }) %]
+    <!-- featured products -->
+    [%- partial('/featuredProducts') %]
 
   </div>
 
