@@ -32,7 +32,7 @@ baked.defineTasks(gulp);
 
 var paths = {
   stylus: {
-    src: config.options.srcDir + '/**/*.styl',
+    src: config.options.srcDir + '/stylus/*.styl',
     dst: config.options.dstDir
   }
 };
