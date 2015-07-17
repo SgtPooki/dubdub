@@ -6,6 +6,10 @@
     "gulp": "^3.9.0",
     "gulp-stylus": "^1.0.2",
     "gulp-util": "^3.0.6",
-    "gulp-watch": "^0.6.8"
+    "gulp-watch": "^0.6.8",
+    "webpack-stream": "^2.0.0"
+  },
+  "dependencies": {
+    "jquery": "^2.1.4"
   }
 }
