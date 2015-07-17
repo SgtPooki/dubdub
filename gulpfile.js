@@ -6,6 +6,7 @@ var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
 var baked = require('baked/gulp');
 var stylus = require('gulp-stylus');
+var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync').create();
 
 //////////////////////////////////////////////////////////////////
@@ -42,7 +43,17 @@ gulp.task('imagemin', function() {
 gulp.task('webpack', function() {
   return gulp.src('./to_generate/js/app.js')
     .pipe(webpack({
-      watch: true, //not sure if this is suppossed to be here for production builds
+      output: {
+        filename: 'bundle.js'
+      }
+    }))
+    .pipe(gulp.dest('./generated/js/'));
+});
+//TODO: make this DRY. Problem is you need watch:true for gulp serve, but can't have it for gulp because it will hang the build. Not sure how to pass in arguments to a gulp task either.
+gulp.task('watch:webpack', function() {
+  return gulp.src('./to_generate/js/app.js')
+    .pipe(webpack({
+      watch: true,
       output: {
         filename: 'bundle.js'
       }
@@ -72,9 +83,13 @@ var paths = {
   }
 };
 gulp.task('stylus', function () {
-  gulp.src(paths.stylus.src)
-    .pipe(stylus())
-    .pipe(gulp.dest(paths.stylus.dst));
+  gulp.src('./to_generate/stylus/main.styl')
+    .pipe(sourcemaps.init())
+      .pipe(stylus({
+        compress: true
+      }))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('./generated/assets/stylesheets/'));
 });
 gulp.task('watch:stylus', function () {
   gulp.watch(paths.stylus.src, ['stylus']);
@@ -83,5 +98,5 @@ gulp.task('watch:stylus', function () {
 
 //////////////////////////////////////////////////////////////////
 // Defaults tasks
-gulp.task('serve', ['stylus', 'imagemin', 'webpack', 'watch:stylus', 'baked:serve', 'browser-sync']);
+gulp.task('serve', ['stylus', 'imagemin', 'watch:webpack', 'watch:stylus', 'baked:serve', 'browser-sync']);
 gulp.task('default', ['stylus', 'imagemin', 'webpack', 'baked:default']);
