@@ -2,10 +2,13 @@
 
 var webpack = require('webpack-stream');
 var gulp = require('gulp');
+var imagemin = require('gulp-imagemin');
+var pngquant = require('imagemin-pngquant');
 var baked = require('baked/gulp');
 var stylus = require('gulp-stylus');
 var browserSync = require('browser-sync').create();
 
+//////////////////////////////////////////////////////////////////
 // Browser-Sync
 gulp.task('browser-sync', function() {
     browserSync.init({
@@ -22,6 +25,19 @@ gulp.task('reload', function () {
   browserSync.reload();
 });
 
+//////////////////////////////////////////////////////////////////
+// imagemin
+gulp.task('imagemin', function() {
+  return gulp.src('./to_generate/images/*')
+    .pipe(imagemin({
+      progressive: true,
+      svgoPlugins: [{removeViewBox: false}],
+      use: [pngquant()]
+    }))
+    .pipe(gulp.dest('./generated/images/'));
+});
+
+//////////////////////////////////////////////////////////////////
 // webpack
 gulp.task('webpack', function() {
   return gulp.src('./to_generate/js/app.js')
@@ -34,35 +50,38 @@ gulp.task('webpack', function() {
     .pipe(gulp.dest('./generated/js/'));
 });
 
-// Load and get the baked configuration
-// in order to use srcDir and dstDir
-var config = baked.init();
+//////////////////////////////////////////////////////////////////
+// baked
 
-// This example uses its specific package.json file so its gulp instance seems
-// to be distinct than the baked's one. This helper allows to load every tasks
-// in the right gulp environment.
-baked.defineTasks(gulp);
+  // Load and get the baked configuration
+  // in order to use srcDir and dstDir
+  var config = baked.init();
 
+  // This example uses its specific package.json file so its gulp instance seems
+  // to be distinct than the baked's one. This helper allows to load every tasks
+  // in the right gulp environment.
+  baked.defineTasks(gulp);
+
+
+//////////////////////////////////////////////////////////////////
+// stylus : Get and render all .styl files recursively
 var paths = {
   stylus: {
     src: config.options.srcDir + '/stylus/*.styl',
     dst: config.options.dstDir
   }
 };
-
-// Get and render all .styl files recursively
 gulp.task('stylus', function () {
   gulp.src(paths.stylus.src)
     .pipe(stylus())
     .pipe(gulp.dest(paths.stylus.dst));
 });
-// More informations on https://www.npmjs.org/package/gulp-stylus
-
 gulp.task('watch:stylus', function () {
   gulp.watch(paths.stylus.src, ['stylus']);
   gulp.watch('generated/*', ['reload']); //TODO: Figure out how to wait until backed:generate finishes so we don't have a ton of reloads while it's generating
 });
 
+//////////////////////////////////////////////////////////////////
 // Defaults tasks
-gulp.task('serve', ['stylus', 'webpack', 'watch:stylus', 'baked:serve', 'browser-sync']);
-gulp.task('default', ['stylus', 'webpack', 'baked:default']);
+gulp.task('serve', ['stylus', 'imagemin', 'webpack', 'watch:stylus', 'baked:serve', 'browser-sync']);
+gulp.task('default', ['stylus', 'imagemin', 'webpack', 'baked:default']);
