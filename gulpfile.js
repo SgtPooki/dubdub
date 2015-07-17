@@ -2,12 +2,19 @@
 
 var webpack = require('webpack-stream');
 var gulp = require('gulp');
+var del = require('del');
 var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
 var baked = require('baked/gulp');
 var stylus = require('gulp-stylus');
 var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync').create();
+
+//////////////////////////////////////////////////////////////////
+// Cleanup generated directory
+gulp.task('clean', function(cb) {
+  del(['generated'], cb);
+});
 
 //////////////////////////////////////////////////////////////////
 // Browser-Sync
@@ -35,7 +42,7 @@ gulp.task('imagemin', function() {
       svgoPlugins: [{removeViewBox: false}],
       use: [pngquant()]
     }))
-    .pipe(gulp.dest('./generated/images/'));
+    .pipe(gulp.dest('./generated/assets/images/'));
 });
 
 //////////////////////////////////////////////////////////////////
@@ -47,7 +54,7 @@ gulp.task('webpack', function() {
         filename: 'bundle.js'
       }
     }))
-    .pipe(gulp.dest('./generated/js/'));
+    .pipe(gulp.dest('./generated/assets/javascript/'));
 });
 //TODO: make this DRY. Problem is you need watch:true for gulp serve, but can't have it for gulp because it will hang the build. Not sure how to pass in arguments to a gulp task either.
 gulp.task('watch:webpack', function() {
@@ -58,7 +65,7 @@ gulp.task('watch:webpack', function() {
         filename: 'bundle.js'
       }
     }))
-    .pipe(gulp.dest('./generated/js/'));
+    .pipe(gulp.dest('./generated/assets/javascript/'));
 });
 
 //////////////////////////////////////////////////////////////////
@@ -100,3 +107,5 @@ gulp.task('watch:stylus', function () {
 // Defaults tasks
 gulp.task('serve', ['stylus', 'imagemin', 'watch:webpack', 'watch:stylus', 'baked:serve', 'browser-sync']);
 gulp.task('default', ['stylus', 'imagemin', 'webpack', 'baked:default']);
+//TODO: Figure out how to call my 'clean' task to run before everything else. If you just add it to the list of all these things that run concurrently, you end up with race conditions which error because you're trying to delete folders & files at the same time as you're trying to write new folders & files.
+// tried runSequence but it messed up the watchers
