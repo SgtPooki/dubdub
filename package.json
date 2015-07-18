@@ -11,6 +11,8 @@
     "gulp-util": "^3.0.6",
     "gulp-watch": "^0.6.8",
     "imagemin-pngquant": "^4.1.2",
+    "node-libs-browser": "^0.5.2",
+    "webpack": "^1.10.1",
     "webpack-stream": "^2.0.0"
   },
   "dependencies": {

@@ -1,6 +1,7 @@
 'use strict';
 
-var webpack = require('webpack-stream');
+var webpack = require('webpack');
+var gulpWebpack = require('webpack-stream');
 var gulp = require('gulp');
 var del = require('del');
 var imagemin = require('gulp-imagemin');
@@ -49,17 +50,21 @@ gulp.task('imagemin', function() {
 // webpack
 gulp.task('webpack', function() {
   return gulp.src('./to_generate/js/app.js')
-    .pipe(webpack({
+    .pipe(gulpWebpack({
       output: {
         filename: 'bundle.js'
-      }
+      },
+      plugins: [
+        new webpack.optimize.UglifyJsPlugin({minimize: true})
+      ]
     }))
     .pipe(gulp.dest('./generated/assets/javascript/'));
 });
 //TODO: make this DRY. Problem is you need watch:true for gulp serve, but can't have it for gulp because it will hang the build. Not sure how to pass in arguments to a gulp task either.
+//TODO: How do we test that the minified version works? I think we should maybe minimize during watch as well with sourcemaps for debugging. Thoughts?
 gulp.task('watch:webpack', function() {
   return gulp.src('./to_generate/js/app.js')
-    .pipe(webpack({
+    .pipe(gulpWebpack({
       watch: true,
       output: {
         filename: 'bundle.js'
