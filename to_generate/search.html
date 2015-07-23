@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- include common head -->
+    [%- partial('/head') %]
+    <!-- page-specific head -->
+    <title>Search</title>
+  </head>
+<body>
+
+  <!-- include the common site header -->
+  [%- partial('/header') %]
+
+  <!-- container -->
+  <div class="container">
+
+    <!-- product name -->
+    <h1>Search</h1>
+
+    [%- partial('/searchResultsTemplate') %]
+
+  </div>
+
+  <script src="/assets/javascript/bundle.js"></script>
+</body>
+</html>
