@@ -7,7 +7,7 @@ var del = require('del');
 var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
 var baked = require('baked/gulp');
-var stylus = require('gulp-stylus');
+var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync').create();
 
@@ -62,7 +62,7 @@ gulp.task('webpack', function() {
 });
 //TODO: make this DRY. Problem is you need watch:true for gulp serve, but can't have it for gulp because it will hang the build. Not sure how to pass in arguments to a gulp task either.
 //TODO: How do we test that the minified version works? I think we should maybe minimize during watch as well with sourcemaps for debugging. Thoughts?
-gulp.task('watch:webpack', function() {
+gulp.task('webpack:watch', function() {
   return gulp.src('./to_generate/js/app.js')
     .pipe(gulpWebpack({
       watch: true,
@@ -87,30 +87,22 @@ gulp.task('watch:webpack', function() {
 
 
 //////////////////////////////////////////////////////////////////
-// stylus : Get and render all .styl files recursively
-var paths = {
-  stylus: {
-    src: config.options.srcDir + '/stylus/*.styl',
-    dst: config.options.dstDir
-  }
-};
-gulp.task('stylus', function () {
-  gulp.src('./to_generate/stylus/main.styl')
+// sass : Get and render all .scss files recursively
+gulp.task('sass', function () {
+  gulp.src('./to_generate/sass/**/*.scss')
     .pipe(sourcemaps.init())
-      .pipe(stylus({
-        compress: true
-      }))
+      .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('./generated/assets/stylesheets/'));
 });
-gulp.task('watch:stylus', function () {
-  gulp.watch(paths.stylus.src, ['stylus']);
+gulp.task('sass:watch', function () {
+  gulp.watch('./to_generate/sass/**/*.scss', ['sass']);
   gulp.watch('generated/*', ['reload']); //TODO: Figure out how to wait until backed:generate finishes so we don't have a ton of reloads while it's generating
 });
 
 //////////////////////////////////////////////////////////////////
 // Defaults tasks
-gulp.task('serve', ['stylus', 'imagemin', 'watch:webpack', 'watch:stylus', 'baked:serve', 'browser-sync']);
-gulp.task('default', ['stylus', 'imagemin', 'webpack', 'baked:default']);
+gulp.task('serve', ['sass', 'imagemin', 'webpack:watch', 'sass:watch', 'baked:serve', 'browser-sync']);
+gulp.task('default', ['sass', 'imagemin', 'webpack', 'baked:default']);
 //TODO: Figure out how to call my 'clean' task to run before everything else. If you just add it to the list of all these things that run concurrently, you end up with race conditions which error because you're trying to delete folders & files at the same time as you're trying to write new folders & files.
 // tried runSequence but it messed up the watchers
