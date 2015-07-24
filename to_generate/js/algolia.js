@@ -1,4 +1,5 @@
 'use strict';
+/*eslint camelcase: [2, {properties: "never"}]*/
 
 var algoliasearch = require('algoliasearch');
 var algoliasearchHelper = require('algoliasearch-helper');
@@ -222,15 +223,15 @@ $(document).ready(function() {
   });
   $(document).on('click', '.gotoPage', function() {
     helper.setCurrentPage(+$(this).data('page') - 1).search();
-    $('html, body').animate({scrollTop:0}, '500', 'swing');
+    $('html, body').animate({scrollTop: 0}, '500', 'swing');
     return false;
   });
-  $(document).on('click', '.sortBy',function() {
+  $(document).on('click', '.sortBy', function() {
     $(this).closest('.btn-group').find('.sort-by').text($(this).text());
     helper.setIndex(INDEX_NAME + $(this).data('index-suffix')).search();
     return false;
   });
-  $(document).on('click', '#input-search',function() {
+  $(document).on('click', '#input-search', function() {
     $inputField.val('').keyup();
   });
 
@@ -299,7 +300,7 @@ $(document).ready(function() {
       helper.toggleRefine(facet, value, false);
     }
     // Page has to be set in the end to avoid being overwritten
-    var page = decodeURIComponent(sURLVariables[1].split('=')[1]) -1;
+    var page = decodeURIComponent(sURLVariables[1].split('=')[1]) - 1;
     helper.setCurrentPage(page);
   }
 

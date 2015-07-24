@@ -1,5 +1,10 @@
 {
     "env": {
-        "node": true
+        "node": true,
+        "browser": true
+    },
+    "rules": {
+      "no-use-before-define": 0,
+      "curly": [2, "multi-line"]
     }
 }
