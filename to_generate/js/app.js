@@ -1,8 +1,7 @@
 'use strict';
 
 var $ = require('jquery');
-var whatev = require('./whatever');
-var algolia = require('./algolia');
-var bootstrapSlider = require('bootstrap-slider');
+require('./whatever');
+require('./algolia');
 
 $('.haters').fadeOut();

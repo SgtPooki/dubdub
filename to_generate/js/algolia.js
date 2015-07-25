@@ -1,10 +1,11 @@
 'use strict';
 /*eslint camelcase: [2, {properties: "never"}]*/
 
+var $ = require('jquery');
+var Hogan = require('hogan');
 var algoliasearch = require('algoliasearch');
 var algoliasearchHelper = require('algoliasearch-helper');
-var Hogan = require('hogan');
-var $ = require('jquery');
+var noUiSlider = require('./vendor/nouislider');
 // var client = algoliasearch('7FI9T0IXZ5', 'b998ea87dc6edcbdf733d2796f8eccf7');
 // var index = client.initIndex('mozu_products');
 
@@ -200,13 +201,62 @@ $(document).ready(function() {
     $pagination.html(paginationTemplate.render(pagination));
   }
 
-
   // Event bindings
   function bindSearchObjects() {
     // Slider binding
-    $('#customerReviewCount-slider').slider().on('slideStop', function(ev) {
-      helper.addNumericRefinement('customerReviewCount', '>=', ev.value[0]).search();
-      helper.addNumericRefinement('customerReviewCount', '<=', ev.value[1]).search();
+    var slider = $('#customerReviewCount-slider');
+
+    //create an instance of the noUiSlider
+    createNoUiSlider(slider[0], slider.data('min'), slider.data('max'), slider.data('values'));
+
+    ///////////////////////////////////////////////////////
+    // ADD TOOLTIP FEATURE TO NOUISLIDER
+    // PER: http://refreshless.com/nouislider/examples/#section-tooltips
+    var tipHandles = slider[0].getElementsByClassName('noUi-handle'),
+    	tooltips = [];
+    // Add divs to the slider handles.
+    for ( var i = 0; i < tipHandles.length; i++ ){
+      tooltips[i] = document.createElement('div');
+      tipHandles[i].appendChild(tooltips[i]);
+      // Add a class for styling
+      tooltips[i].className += 'tooltip';
+      // Add additional markup
+      tooltips[i].innerHTML = '<span></span>'; //NOTE: You can put a currency symbol or other text before the <span>
+      // Replace the tooltip reference with the span we just added
+      tooltips[i] = tooltips[i].getElementsByTagName('span')[0];
+    }
+    // When the slider changes, write the value to the tooltips.
+    slider[0].noUiSlider.on('update', function( values, handle ){
+      tooltips[handle].innerHTML = values[handle];
+    });
+    ///////////////////////////////////////////////////////
+
+    //watch for changes to it
+    slider[0].noUiSlider.on('change', function(ev) {
+      helper.addNumericRefinement('customerReviewCount', '>=', ev[0]).search();
+      helper.addNumericRefinement('customerReviewCount', '<=', ev[1]).search();
+    });
+  }
+
+  //bind to any element with a class of noUiSlider
+  function createNoUiSlider(elem, min, max, values) {
+    var vals = values.split(',');
+    noUiSlider.create(elem, {
+      start: [vals[0], vals[1]],
+      step: 1,
+      connect: true,
+      range: {
+        'min': min,
+        'max': max
+      }
+      // format: {
+      //   to: function ( value ) {
+      //     return value;
+      //   },
+      //     from: function ( value ) {
+      //     return value.replace('.00', '');
+      //   }
+      // }
     });
   }
 

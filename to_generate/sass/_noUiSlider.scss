@@ -1,0 +1,115 @@
+/* Slider size and handle placement;
+ */
+.noUi-horizontal {
+	height: 15px;
+}
+.noUi-horizontal .noUi-handle {
+	width: 26px;
+	height: 26px;
+	left: -13px;
+	top: -7px;
+	border-radius: 100%;
+}
+.noUi-horizontal.noUi-extended {
+	padding: 0 15px;
+}
+.noUi-horizontal.noUi-extended .noUi-origin  {
+	right: -15px;
+}
+.noUi-vertical {
+	width: 18px;
+}
+.noUi-vertical .noUi-handle {
+	width: 20px;
+	height: 20px;
+	left: -10px;
+	top: -6px;
+	border-radius: 100%;
+}
+.noUi-vertical.noUi-extended {
+	padding: 15px 0;
+}
+.noUi-vertical.noUi-extended .noUi-origin  {
+	bottom: -15px;
+}
+
+/* Styling;
+ */
+.noUi-background {
+	background: #FAFAFA;
+	box-shadow: inset 0 1px 1px #f0f0f0;
+}
+.noUi-connect {
+	background: #464646;
+	box-shadow: inset 0 0 3px rgba(51,51,51,0.45);
+-webkit-transition: background 450ms;
+	transition: background 450ms;
+}
+.noUi-origin {
+	border-radius: 10px;
+}
+.noUi-target {
+	border-radius: 10px;
+	border: 1px solid #D3D3D3;
+}
+.noUi-target.noUi-connect {
+	box-shadow: inset 0 0 3px rgba(51,51,51,0.45), 0 3px 6px -5px #BBB;
+}
+
+.noUi-horizontal.noUi-extended {
+	padding-right: 32px;
+}
+.noUi-horizontal.noUi-extended .noUi-handle {
+	left: -1px;
+}
+.noUi-horizontal.noUi-extended .noUi-origin  {
+	right: -32px;
+}
+
+/* Handles and cursors;
+ */
+.noUi-dragable {
+	cursor: w-resize;
+}
+.noUi-vertical .noUi-dragable {
+	cursor: n-resize;
+}
+.noUi-handle {
+	border: 1px solid #464646;
+	border-radius: 100%;
+	background: #464646;
+	cursor: default;
+}
+.noUi-active {
+
+}
+
+/* Handle stripes;
+ */
+ .noUi-handle:before,
+ .noUi-handle:after {
+ 	display: none;
+ }
+
+/* Disabled state;
+ */
+[disabled].noUi-connect,
+[disabled] .noUi-connect {
+	background: #B8B8B8;
+}
+[disabled] .noUi-handle {
+	cursor: not-allowed;
+}
+
+/////////////////////////////////////////////////////////
+/* ADDED TOOLTIPS!
+*/
+.tooltip {
+	display: block;
+	position: absolute;
+	top: -23px;
+	padding: 0px;
+	left: -9px;
+	text-align: center;
+	width: 50px;
+}

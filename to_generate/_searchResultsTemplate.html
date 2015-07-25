@@ -1,4 +1,5 @@
 
+
   <!-- Header -->
   <header>
       <div class="row">
@@ -19,7 +20,6 @@
       </div>
   </header>
   <!-- /Header -->
-
 
   <!-- Main -->
     <div class="row">
@@ -113,13 +113,9 @@
         <div class="page-header">
           <h5>{{ title }}</h5>
         </div>
-        <li class="facet-slider">
-          <b>{{ min }}</b>
-          <span class="slider-wrapper">
-          <input type="text" data-slider-min="{{ min }}" data-slider-max="{{ max }}" data-slider-step="1" data-slider-value="[{{ values }}]" data-slider-orientation="horizontal" data-slider-selection="after" id="{{ facet }}-slider" />
-          </span>
-          <b>{{ max }}</b>
-        </li>
+        <div class="slider-wrapper">
+        <div id="{{ facet }}-slider" class="noUiSlider" data-min="{{ min }}" data-max="{{ max }}" data-values="{{ values }}"></div>
+      </div>
       </ul>
     </div>
   </script>

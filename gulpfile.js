@@ -55,7 +55,12 @@ gulp.task('webpack', function() {
         filename: 'bundle.js'
       },
       plugins: [
-        new webpack.optimize.UglifyJsPlugin({minimize: true})
+        new webpack.optimize.UglifyJsPlugin({minimize: true}),
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery'
+        })
       ]
     }))
     .pipe(gulp.dest('./generated/assets/javascript/'));
