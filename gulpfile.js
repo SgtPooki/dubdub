@@ -90,13 +90,14 @@ var paths = {
   }
 };
 gulp.task('stylus', function () {
-  gulp.src('./to_generate/stylus/main.styl')
+  return gulp.src('./to_generate/stylus/main.styl')
     .pipe(sourcemaps.init())
       .pipe(stylus({
         compress: true
       }))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./generated/assets/stylesheets/'));
+    .pipe(gulp.dest('./generated/assets/stylesheets/'))
+    .pipe(browserSync.stream());
 });
 gulp.task('watch:stylus', function () {
   gulp.watch(paths.stylus.src, ['stylus']);
