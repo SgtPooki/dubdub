@@ -227,7 +227,7 @@ $(document).ready(function() {
     }
     // When the slider changes, write the value to the tooltips.
     slider[0].noUiSlider.on('update', function( values, handle ){
-      tooltips[handle].innerHTML = values[handle];
+      tooltips[handle].innerHTML = values[handle].toString().replace('.00', '');
     });
     ///////////////////////////////////////////////////////
 
@@ -249,14 +249,6 @@ $(document).ready(function() {
         'min': min,
         'max': max
       }
-      // format: {
-      //   to: function ( value ) {
-      //     return value;
-      //   },
-      //     from: function ( value ) {
-      //     return value.replace('.00', '');
-      //   }
-      // }
     });
   }
 
