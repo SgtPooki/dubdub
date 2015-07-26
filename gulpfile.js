@@ -9,6 +9,7 @@ var baked = require('baked/gulp');
 var stylus = require('gulp-stylus');
 var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync').create();
+var runSequence = require('run-sequence');
 
 //////////////////////////////////////////////////////////////////
 // Cleanup generated directory
@@ -20,15 +21,17 @@ gulp.task('clean', function(cb) {
 // Browser-Sync
 gulp.task('browser-sync', function() {
     browserSync.init({
-        reloadDelay: 500,
-        reloadDebounce: 500,
+        reloadDebounce: 5000,
         server: {
             baseDir: './generated'
         }
     });
 
-    browserSync.watch(['generated/*.html'], function (event, file) {
-        browserSync.reload('generated/*.html');
+    gulp.watch(['to_generate/**/*.html'], function () {
+        runSequence(
+            'baked:generate',
+            browserSync.reload
+        );
     });
 });
 gulp.task('reload', function () {
@@ -46,7 +49,7 @@ gulp.task('imagemin', function() {
       use: [pngquant()]
     }))
     .pipe(gulp.dest('./generated/assets/images/'))
-    .pipe(browserSync.stream());
+    .pipe(browserSync.stream({match: 'assets/images/**'}));
 });
 
 //////////////////////////////////////////////////////////////////
@@ -70,7 +73,7 @@ gulp.task('watch:webpack', function() {
       }
     }))
     .pipe(gulp.dest('./generated/assets/javascript/'))
-    .pipe(browserSync.stream());
+    .pipe(browserSync.stream({match: "**/*.js"}));
 });
 
 //////////////////////////////////////////////////////////////////
@@ -124,7 +127,7 @@ gulp.task('stylus', function () {
       }))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('./generated/assets/stylesheets/'))
-    .pipe(browserSync.stream());
+    .pipe(browserSync.stream({match: "**/*.css"}));
 });
 gulp.task('watch:stylus', function () {
   gulp.watch(paths.stylus.src, ['stylus']);
@@ -132,7 +135,7 @@ gulp.task('watch:stylus', function () {
 
 //////////////////////////////////////////////////////////////////
 // Defaults tasks
-gulp.task('serve', ['stylus', 'imagemin', 'watch:webpack', 'watch:stylus', 'baked:serve', 'browser-sync']);
+gulp.task('serve', ['stylus', 'imagemin', 'watch:webpack', 'watch:stylus', 'browser-sync']);
 gulp.task('default', ['stylus', 'imagemin', 'webpack', 'baked:default']);
 //TODO: Figure out how to call my 'clean' task to run before everything else. If you just add it to the list of all these things that run concurrently, you end up with race conditions which error because you're trying to delete folders & files at the same time as you're trying to write new folders & files.
 // tried runSequence but it messed up the watchers
