@@ -136,17 +136,17 @@
       <div class="col s6">
         <div class="card small">
           <div class="image left">
-            <a class="" href="/product/{{ uid }}">
-              <img src="{{ fragments.product.image.value.main.url }}" width="100px" alt="{{ fragments.product.name.asText }}">
+            <a class="" href="{{ url }}">
+              <img src="{{ image }}" alt="{{ name }}">
             </a>
           </div>
           <div class="media-body">
             <h3 class="hit_price right text-right text-danger">
-              ${{ fragments.product.price.asHtml }}
+              ${{ salePrice }}
             </h3>
-            <h4 class="hit_name">{{{ _highlightResult.fragments.product.name.asText.value }}}</h4>
+            <h4 class="hit_name">{{{ _highlightResult.name.value }}}</h4>
             <p>
-              {{{ _highlightResult.fragments.product.description.asHtml.value }}}
+              {{{ _highlightResult.shortDescription.value }}}
             </p>
               <!-- {{#_highlightResult.manufacturer}}
                 <span class="new badge">{{{ _highlightResult.manufacturer.value }}}</span>

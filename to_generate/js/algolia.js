@@ -8,6 +8,7 @@ var algoliasearchHelper = require('algoliasearch-helper');
 var noUiSlider = require('./vendor/nouislider');
 // var client = algoliasearch('7FI9T0IXZ5', 'b998ea87dc6edcbdf733d2796f8eccf7');
 // var index = client.initIndex('mozu_products');
+exports.config = {};
 
 $(document).ready(function() {
 
@@ -16,19 +17,12 @@ $(document).ready(function() {
   * *******************/
 
   // REPLACE WITH YOUR OWN VALUES
-  var APPLICATION_ID = 'latency';
-  var SEARCH_ONLY_API_KEY = '6be0576ff61c053d5f9a3225e2a90f76';
-  var INDEX_NAME = 'bestbuy';
-  var HITS_PER_PAGE = 10;
-  var FACET_CONFIG = [
-  { name: 'type', title: 'Type', disjunctive: false, sortFunction: sortByCountDesc },
-  { name: 'shipping', title: 'Shipping', disjunctive: false, sortFunction: sortByCountDesc },
-  { name: 'customerReviewCount', title: '# Reviews', disjunctive: true, type: 'slider' },
-  { name: 'category', title: 'Category', disjunctive: true, sortFunction: sortByCountDesc, topListIfRefined: true },
-  { name: 'salePrice_range', title: 'Price range', disjunctive: true, sortFunction: sortByName },
-  { name: 'manufacturer', title: 'Manufacturer', disjunctive: true, sortFunction: sortByName, topListIfRefined: true }
-  ];
-  var MAX_VALUES_PER_FACET = 30;
+  var APPLICATION_ID = exports.config.APPLICATION_ID;
+  var SEARCH_ONLY_API_KEY = exports.config.SEARCH_ONLY_API_KEY;
+  var INDEX_NAME = exports.config.INDEX_NAME;
+  var HITS_PER_PAGE = exports.config.HITS_PER_PAGE;
+  var FACET_CONFIG = exports.config.FACET_CONFIG;
+  var MAX_VALUES_PER_FACET = exports.config.MAX_VALUES_PER_FACET;
   // END REPLACE
 
   // DOM binding
@@ -65,11 +59,7 @@ $(document).ready(function() {
       helper.setQuery(query).search();
     })
     .focus();
-
-
   helper.on('change', setURLParams);
-
-
   helper.on('error', function(error) {
     console.log(error);
   });
@@ -78,8 +68,9 @@ $(document).ready(function() {
     renderHits(content);
     renderFacets(content, state);
     renderPagination(content);
-    bindSearchObjects();
+//    bindSearchObjects();
   });
+
 
   /************
   * SEARCH
@@ -101,6 +92,7 @@ $(document).ready(function() {
   function renderHits(content) {
     var hitsHtml = '';
     for (var i = 0; i < content.hits.length; ++i) {
+      console.log(content.hits[0]);
       hitsHtml += hitTemplate.render(content.hits[i]);
     }
     if (content.hits.length === 0) hitsHtml = '<p id="no-hits">We didn\'t find any products for your search.</p>';
@@ -108,6 +100,10 @@ $(document).ready(function() {
   }
 
   function renderFacets(content, state) {
+
+    console.log('tesrt');
+    console.log(content);
+
     // If no results
     if (content.hits.length === 0) {
       $facets.empty();
@@ -308,12 +304,17 @@ $(document).ready(function() {
     split[0] = split[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + delimiter);
     return split.join('.');
   }
+
   function sortByCountDesc (a, b) {
     return b.count - a.count;
   }
+  exports.sortByCountDesc = sortByCountDesc; //also export it
+
   function sortByName (a, b) {
     return a.value.localeCompare(b.value);
   }
+  exports.sortByName = sortByName; //also export it
+
   function sortByRefined (sortFunction) {
     return function (a, b) {
       if (a.refined !== b.refined) {

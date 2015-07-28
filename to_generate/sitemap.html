@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- include common head -->
+  [%- partial('/head') %]
+  <!-- page-specific head -->
+  <title>Sitemap</title>
+  <!-- grab some data from prismic (which needs to happen here, and then can be used in partials) -->
+  <script type="text/prismic-query" data-binding="allProducts" data-query-orderings="[my.product.name]">
+    [
+      [:d = any(document.type, ["product"])]
+    ]
+  </script>
+</head>
+<body>
+
+  <!-- include the common site header -->
+  [%- partial('/header') %]
+
+  <!-- container -->
+  <div class="container">
+
+    <!-- hero -->
+    <h1>Sitemap</h1>
+    <!-- This page exists so that it generates all the child detail pages -->
+    <br>
+
+    [% _.each(allProducts.results, function(product) { %]
+      <div class="item">
+        <a href="[%= pathTo('product', {uid: product.uid}) %]">
+          <h3>[%= product.getText('product.name') %]</h3>
+        </a>
+      </div>
+    [% }) %]
+
+
+  </div>
+
+  <script src="/assets/javascript/bundle.js"></script>
+</body>
+</html>

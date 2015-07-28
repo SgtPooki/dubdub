@@ -22,6 +22,7 @@
     "bootstrap": "^3.3.5",
     "bootstrap-slider": "^4.10.3",
     "hogan": "^1.0.2",
-    "jquery": "^2.1.4"
+    "jquery": "^2.1.4",
+    "url": "^0.10.3"
   }
 }
