@@ -61,13 +61,11 @@ gulp.task('webpack', function() {
       output: {
         filename: 'bundle.js'
       },
+      externals: {
+        'jquery': 'jQuery'
+      },
       plugins: [
-        new webpack.optimize.UglifyJsPlugin({minimize: true}),
-        new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery',
-            'window.jQuery': 'jquery'
-        })
+        new webpack.optimize.UglifyJsPlugin({minimize: true})
       ]
     }))
     .pipe(gulp.dest('./generated/assets/javascript/'));
@@ -80,10 +78,13 @@ gulp.task('webpack:watch', function() {
       watch: true,
       output: {
         filename: 'bundle.js'
+      },
+      externals: {
+        'jquery': 'jQuery'
       }
     }))
     .pipe(gulp.dest('./generated/assets/javascript/'))
-    .pipe(browserSync.stream({match: "**/*.js"}));
+    .pipe(browserSync.stream({match: '**/*.js'}));
 });
 
 //////////////////////////////////////////////////////////////////
@@ -129,7 +130,7 @@ gulp.task('sass', function () {
       .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('./generated/assets/stylesheets/'))
-    .pipe(browserSync.stream({match: "**/*.css"}));
+    .pipe(browserSync.stream({match: '**/*.css'}));
 });
 gulp.task('sass:watch', function () {
   gulp.watch('./to_generate/sass/**/*.scss', ['sass']);
