@@ -7,6 +7,7 @@ var url = require('url');
 /////////////////////////////////////////////////
 // Algolia Config
 if (url.parse(location.href).pathname === '/search/') {
+  algolia.init();
   algolia.config.APPLICATION_ID = '7FI9T0IXZ5';
   algolia.config.SEARCH_ONLY_API_KEY = 'b998ea87dc6edcbdf733d2796f8eccf7';
   algolia.config.INDEX_NAME = 'prismic_products';
@@ -15,6 +16,7 @@ if (url.parse(location.href).pathname === '/search/') {
     { name: 'fragments.product.name.value.text', title: 'name', disjunctive: true, sortFunction: algolia.sortByName, topListIfRefined: true }
   ];
 } else if (url.parse(location.href).pathname === '/examples/search-best-buy/') {
+  algolia.init();
   algolia.config.APPLICATION_ID = 'latency';
   algolia.config.SEARCH_ONLY_API_KEY = '6be0576ff61c053d5f9a3225e2a90f76';
   algolia.config.INDEX_NAME = 'bestbuy';
