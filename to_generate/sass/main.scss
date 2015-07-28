@@ -1,9 +1,10 @@
+@import 'materialize';
+@import 'vendor/nouislider';
+
 @import 'global';
 @import 'product';
 @import 'search';
-@import 'vendor/nouislider';
 @import 'noUiSlider';
-
 
 .col.grid-example {
   border: 1px solid #eee;
