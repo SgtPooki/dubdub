@@ -78,29 +78,15 @@ gulp.task('watch:webpack', function() {
 
 //////////////////////////////////////////////////////////////////
 // baked
-// Because we are handling js, stylus, and images ourselves, and we want to reload the page only when
-// baked is done loading, we must tell baked to ignore the js, css, and image files. This will allow us to
-// appropriately reload only when each of the different filetypes are changed using browserSync.stream for those
-// tasks, and a browserSync.watch task on html files (the only thing being handled by baked.js).
-
-  // baked.js currently has a bug where command line options are overriding options passed via
-  // the baked.init() method. So we have to fix that by faking the command line arguments like below.
-  // Please see https://github.com/prismicio/baked.js/issues/26 for more information.
-  process.argv.push('--ignore');
-  process.argv.push('js/*');
-  process.argv.push('--ignore');
-  process.argv.push('images/*');
-  process.argv.push('--ignore');
-  process.argv.push('stylus/*');
 
   // Load and get the baked configuration
   // in order to use srcDir and dstDir
   var config = baked.init({
       options: {
           ignore: [
-              'images/*',
-              'js/*',
-              'stylus/*'
+              '/images',
+              '/js',
+              '/stylus'
           ]
       }
   });

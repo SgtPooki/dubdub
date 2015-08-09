@@ -1,7 +1,7 @@
 {
   "name": "dubdub",
   "devDependencies": {
-    "baked": "0.3.0",
+    "baked": "https://github.com/prismicio/baked.js.git#6b1e96",
     "browser-sync": "^2.7.13",
     "del": "^1.2.0",
     "gulp": "^3.9.0",
